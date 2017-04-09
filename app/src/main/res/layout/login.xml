@@ -9,26 +9,28 @@
         android:background="#ffffff">
 
         <LinearLayout
-            android:id="@+id/form"
+            android:id="@+id/log_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp">
 
-            <android.support.v7.widget.AppCompatImageView
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="@color/colorAccent"
-                android:minHeight="120dp"
-                android:layout_marginBottom="20dp" />
+                android:minHeight="120dp" />
+
             <TextView
-                android:id="@+id/log_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email" />
 
             <EditText
+                android:id="@+id/log_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -41,19 +43,21 @@
                 android:text="Password" />
 
             <EditText
+                android:id="@+id/log_pswd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:lines="1" />
 
             <Button
+                android:id="@+id/log_log"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Login"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:text="Login" />
 
             <TextView
-                android:id="@+id/reg_link"
+                android:id="@+id/log_link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

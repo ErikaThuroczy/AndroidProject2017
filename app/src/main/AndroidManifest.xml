@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hu.uniobuda.nik.visualizer.androidproject2017">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="Login to your Account">
+            android:label="Git Simulator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -19,7 +22,7 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="Register New Account"></activity>
+            android:label="Register"></activity>
     </application>
 
 </manifest>
