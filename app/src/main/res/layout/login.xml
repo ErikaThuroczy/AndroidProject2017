@@ -22,7 +22,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:background="@color/colorAccent"
-                android:minHeight="120dp" />
+                android:minHeight="150dp" />
 
             <TextView
                 android:layout_width="match_parent"
