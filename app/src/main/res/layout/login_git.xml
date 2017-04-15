@@ -4,19 +4,27 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/reg_form"
+        android:id="@+id/log_git_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="40dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Full name" />
+            android:gravity="center"
+            android:paddingBottom="30dp"
+            android:text="Sign in with your Github account!"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Git username" />
 
         <EditText
-            android:id="@+id/reg_uname"
+            android:id="@+id/log_git_uname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -25,16 +33,15 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email" />
+            android:text="Git Url" />
 
         <EditText
-            android:id="@+id/reg_mail"
+            android:id="@+id/log_git_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="5dp"
             android:lines="1" />
-        <!--android:inputType="textEmailAddress"-->
 
         <TextView
             android:layout_width="match_parent"
@@ -42,7 +49,7 @@
             android:text="Password" />
 
         <EditText
-            android:id="@+id/reg_pswd"
+            android:id="@+id/log_git_pswd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -50,21 +57,11 @@
             android:lines="1" />
 
         <Button
-            android:id="@+id/reg_reg"
+            android:id="@+id/log_git_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Register" />
-
-        <TextView
-            android:id="@+id/reg_link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Already registered! Login here"
-            android:textColor="@color/colorAccent"
-            android:textSize="18dip" />
+            android:text="Add" />
 
     </LinearLayout>
 
