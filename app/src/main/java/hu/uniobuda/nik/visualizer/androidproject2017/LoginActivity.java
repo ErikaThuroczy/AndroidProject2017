@@ -81,7 +81,7 @@ public class LoginActivity extends Activity {
 
     private void checkLogin(final String email, final String password) {
         //tag used to cancel the request
-        String tag_string_req = "req_login";
+        String tag_string_req = "log_login";
 
         pDialog.setMessage("Logging in ...");
         showHideDialog();

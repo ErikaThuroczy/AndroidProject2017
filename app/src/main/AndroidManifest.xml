@@ -22,10 +22,13 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="Register"></activity>
+            android:label="Register" />
         <activity
             android:name=".MainActivity"
-            android:label="Main"></activity>
+            android:label="Visualizer" />
+        <activity
+            android:name=".RepoSelecterActivity"
+            android:label="Add repo" />
     </application>
 
 </manifest>

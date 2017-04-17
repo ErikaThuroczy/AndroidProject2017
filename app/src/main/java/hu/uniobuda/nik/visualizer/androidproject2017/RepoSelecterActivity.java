@@ -2,12 +2,12 @@ package hu.uniobuda.nik.visualizer.androidproject2017;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,47 +24,44 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
-public class MainActivity extends AppCompatActivity {
-    ListView mainStatList;
-    Button mainAddBtn;
-    Button mainStatBtn;
-    ProgressDialog pDialog;
 
+public class RepoSelecterActivity extends AppCompatActivity {
+    Button repoAddBtn;
+    ProgressDialog pDialog;
+    TextView gitunameTextView;
+    TextView gitUrlTextView;
+    TextView gitpswdTextView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.statistics);
 
-        mainStatList = (ListView) findViewById(R.id.main_list);
+        setContentView(R.layout.repo);
+
         pDialog = new ProgressDialog(this);
 
-        mainAddBtn = (Button) findViewById(R.id.main_add);
-        mainStatBtn = (Button) findViewById(R.id.main_more);
-        mainStatBtn.setOnClickListener(new View.OnClickListener() {
+        gitunameTextView = (TextView) findViewById(R.id.log_git_uname);
+        gitUrlTextView = (TextView) findViewById(R.id.log_git_url);
+        gitpswdTextView = (TextView) findViewById(R.id.log_git_pswd);
+
+        repoAddBtn = (Button) findViewById(R.id.log_git_add);
+        repoAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selectedListItem = mainStatList.getSelectedItem().toString();
+                String uname = gitunameTextView.getText().toString().trim();
+                String url = gitUrlTextView.getText().toString().trim();
+                String pswd = gitpswdTextView.getText().toString().trim();
 
-                //check for empty data
-                if (!selectedListItem.isEmpty()) {
-                    checkStatistics(selectedListItem);
+                //check for empty data in the form
+                if (!uname.isEmpty() && !url.isEmpty() && !pswd.isEmpty()) {
+                    checkGitLogin(uname, url, pswd);
                 } else {
-                    //prompt user to select a list item
-                    Toast.makeText(getApplicationContext(), "Please select a repo!", Toast.LENGTH_LONG).show();
+                    //prompt user to enter credentials
+                    Toast.makeText(getApplicationContext(), "Please enter the credentials!", Toast.LENGTH_LONG).show();
                 }
             }
         });
-        mainAddBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //open repo adder
-                Intent myIntent = new Intent(getApplicationContext(), RepoSelecterActivity.class);
-                startActivity(myIntent);
-            }
-        });
     }
-
     private void showHideDialog() {
         if (!pDialog.isShowing()) {
             pDialog.show();
@@ -73,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void checkStatistics(final String selected) {
+    private void checkGitLogin(final String username, final String url, final String password) {
         //tag used to cancel the request
-        String tag_string_req = "main_statistics";
+        String tag_string_req = "log_git_add";
 
-        pDialog.setMessage("Getting statistics ...");
+        pDialog.setMessage("Logging in ...");
         showHideDialog();
 
         StringRequest strReq = new StringRequest(
@@ -95,24 +92,21 @@ public class MainActivity extends AppCompatActivity {
 
                             //check for error node in json
                             if (!error) {
-                                // user successfully got statisitcs
+                                // user successfully logged in
+                                // Create login session
+                                //session.setLogin(true);
 
-                                // Now store the stat in SQLite
+                                // Now store the repo in SQLite
                                 String uid = jObj.getString("uid");
 
-                                JSONObject stat = jObj.getJSONObject("statistics");
-                                String auth = stat.getString("author");
-                                long totalCommit = stat.getLong("total_commit");
-                                String elapsedTime = stat.getString("elapsed_time");
-                                String commitWinnerByCount = stat.getString("most_commit_count");
-                                String commitWinnerBySize = stat.getString("most_commit_size");
-                                String busiestPeriod = stat.getString("busiest_period");
+                                JSONObject repo = jObj.getJSONObject("repo");
+                                String name = repo.getString("name");
 
-                                // Inserting row in users table
-                                //db.addStat(statistics..);
+                                // Inserting row in repo table
+                                //db.addRepo(repo);
 
                                 //launch main activity
-                                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                                Intent intent = new Intent(RepoSelecterActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {
@@ -136,9 +130,11 @@ public class MainActivity extends AppCompatActivity {
                 }) {
             @Override
             protected Map<String, String> getParams() {
-                //posting parameters to login url
+                //posting parameters to git login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("repo", selected);
+                params.put("username", username);
+                params.put("url", url);
+                params.put("password", password);
 
                 return params;
             }
@@ -146,6 +142,5 @@ public class MainActivity extends AppCompatActivity {
         //adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
-
 
 }
