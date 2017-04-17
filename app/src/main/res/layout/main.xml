@@ -8,27 +8,22 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <ScrollView
-            android:id="@+id/main_scroll"
+        <ListView
+            android:id="@+id/main_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
-
-            <ListView
-                android:id="@+id/main_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
+            android:layout_alignParentTop="true" />
 
         <Button
             android:id="@+id/main_add"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="+" />
 
@@ -36,9 +31,12 @@
             android:id="@+id/main_repo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/main_scroll"
+            android:layout_below="@+id/main_list"
             android:layout_marginTop="20dp"
-            android:gravity="center"
+            android:paddingEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="10dp"
             android:text="Git simulator!"
             android:textSize="20sp" />
 
@@ -46,6 +44,7 @@
             android:id="@+id/main_more"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@id/main_add"
             android:layout_marginTop="20dp"

@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+
+    <RelativeLayout
         android:id="@+id/stat_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Repo statistics"
-        android:paddingBottom="10dp"/>
+        <Button
+            android:id="@+id/stat_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:text="B" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/stat_back"
+            android:layout_toRightOf="@+id/stat_back"
+            android:paddingTop="12dp"
+            android:text="Repo statistics" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/main_more"
+            android:layout_below="@+id/stat_back"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:background="@color/colorAccent"
             android:minHeight="400dp" />
 
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
