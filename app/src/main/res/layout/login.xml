@@ -35,7 +35,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="5dp"
-                android:lines="1" />
+                android:lines="1"
+                android:drawableLeft="@android:drawable/sym_action_email"
+                android:drawableStart="@android:drawable/sym_action_email"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -47,7 +49,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:lines="1" />
+                android:lines="1"
+                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+                android:drawableStart="@android:drawable/ic_lock_idle_lock"/>
 
             <Button
                 android:id="@+id/log_log"

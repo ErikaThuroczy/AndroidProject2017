@@ -100,13 +100,14 @@ public class MainActivity extends AppCompatActivity {
                                 // Now store the stat in SQLite
                                 String uid = jObj.getString("uid");
 
-                                JSONObject stat = jObj.getJSONObject("statistics");
+                                JSONObject stat = jObj.getJSONObject("repo_stat");
                                 String auth = stat.getString("author");
                                 long totalCommit = stat.getLong("total_commit");
                                 String elapsedTime = stat.getString("elapsed_time");
                                 String commitWinnerByCount = stat.getString("most_commit_count");
                                 String commitWinnerBySize = stat.getString("most_commit_size");
                                 String busiestPeriod = stat.getString("busiest_period");
+                                String other = stat.getString("other");
 
                                 // Inserting row in users table
                                 //db.addStat(statistics..);

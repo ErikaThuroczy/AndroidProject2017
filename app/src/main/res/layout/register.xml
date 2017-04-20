@@ -21,7 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:drawableLeft="@android:drawable/ic_menu_myplaces"
+            android:drawableStart="@android:drawable/ic_menu_myplaces"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -34,7 +36,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="5dp"
-            android:lines="1" />
+            android:lines="1"
+            android:drawableLeft="@android:drawable/sym_action_email"
+            android:drawableStart="@android:drawable/sym_action_email"/>
         <!--android:inputType="textEmailAddress"-->
 
         <TextView
@@ -48,7 +52,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:inputType="textPassword"
-            android:lines="1" />
+            android:lines="1"
+            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock" />
 
         <Button
             android:id="@+id/reg_reg"

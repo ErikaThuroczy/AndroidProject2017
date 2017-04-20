@@ -18,7 +18,10 @@
             android:layout_alignParentStart="true"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
-            android:text="B" />
+            android:paddingLeft="3dp"
+            android:paddingStart="3dp"
+            android:drawableLeft="@android:drawable/ic_menu_revert"
+            android:drawableStart="@android:drawable/ic_menu_revert"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -30,15 +33,167 @@
             android:paddingTop="12dp"
             android:text="Repo statistics" />
 
-        <ImageView
+        <TableLayout
+            android:id="@+id/stat_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/stat_back"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:background="@color/colorAccent"
-            android:minHeight="400dp" />
+            android:layout_marginTop="20dp"
+            android:contextClickable="false"
+            android:minHeight="400dp"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:padding="5dp"
+                    android:text="Author" />
+
+                <TextView
+                    android:id="@+id/stat_auth"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="tessssssssst" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:padding="5dp"
+                    android:text="Total commits" />
+
+                <TextView
+                    android:id="@+id/stat_total_commit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:gravity="end"
+                    android:padding="5dp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:padding="5dp"
+                    android:text="Elapsed time" />
+
+                <TextView
+                    android:id="@+id/stat_elapsed_time"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:gravity="center"
+                    android:padding="5dp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:padding="5dp"
+                    android:text="Greatest number of commits by size" />
+
+                <TextView
+                    android:id="@+id/stat_winner_size"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:gravity="end"
+                    android:padding="5dp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:padding="5dp"
+                    android:text="Greatest number of commits by count" />
+
+                <TextView
+                    android:id="@+id/stat_winner_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:gravity="end"
+                    android:padding="5dp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:padding="5dp"
+                    android:text="Busiest period" />
+
+                <TextView
+                    android:id="@+id/stat_period"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:gravity="center"
+                    android:padding="5dp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:padding="5dp"
+                    android:text="Others" />
+
+                <TextView
+                    android:id="@+id/stat_other"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:background="@drawable/cell_template"
+                    android:gravity="center"
+                    android:padding="5dp" />
+            </TableRow>
+        </TableLayout>
 
     </RelativeLayout>
 </ScrollView>
