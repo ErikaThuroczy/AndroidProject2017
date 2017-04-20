@@ -114,10 +114,10 @@ public class LoginActivity extends Activity {
 
                                 // Inserting row in users table
                                 //db.addUser(name, email, uid, created_at);
-                                if(!name.isEmpty() && !uid.isEmpty()){
+                                /*if(!name.isEmpty() && !uid.isEmpty()){
                                     long id = dbHandler.insertUser(name,uid); //add date too
                                     Log.d("DB", "New user: " + id);
-                                }
+                                }*/
 
                                 //launch main activity
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);

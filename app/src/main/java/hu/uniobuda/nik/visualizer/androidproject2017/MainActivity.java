@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.statistics);
+        setContentView(R.layout.main);
 
         mainStatList = (ListView) findViewById(R.id.main_list);
         pDialog = new ProgressDialog(this);
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG, "Login Response: " + response.toString());
+                        Log.d(TAG, "Statistics Response: " + response.toString());
                         showHideDialog();
 
                         try {
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, "Login Error: " + error.getMessage());
+                        Log.e(TAG, "Statistics Error: " + error.getMessage());
                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                         showHideDialog();
                     }
