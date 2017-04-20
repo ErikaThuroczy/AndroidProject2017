@@ -44,15 +44,16 @@ public class MainActivity extends AppCompatActivity {
         mainStatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selectedListItem = mainStatList.getSelectedItem().toString();
-
-                //check for empty data
+                //String selectedListItem = mainStatList.getSelectedItem().toString();
+                checkStatistics("teszt");
+                /*/check for empty data
                 if (!selectedListItem.isEmpty()) {
                     checkStatistics(selectedListItem);
-                } else {
+                }
+                if {
                     //prompt user to select a list item
                     Toast.makeText(getApplicationContext(), "Please select a repo!", Toast.LENGTH_LONG).show();
-                }
+                }*/
             }
         });
         mainAddBtn.setOnClickListener(new View.OnClickListener() {
