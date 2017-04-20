@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,13 +31,14 @@ public class LoginActivity extends Activity {
     ProgressDialog pDialog;
     TextView mailTextView;
     TextView pswdTextView;
-
+    DBHandler dbHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //set def screen to login
         setContentView(R.layout.login);
+        dbHandler = new DBHandler(this);
 
         pDialog = new ProgressDialog(this);
         mailTextView = (TextView) findViewById(R.id.log_mail);
@@ -102,22 +104,25 @@ public class LoginActivity extends Activity {
                             //check for error node in json
                             if (!error) {
                                 // user successfully logged in
-                                // Create login session
-                                //session.setLogin(true);
-
                                 // Now store the user in SQLite
                                 String uid = jObj.getString("uid");
 
                                 JSONObject user = jObj.getJSONObject("user");
                                 String name = user.getString("name");
                                 String email = user.getString("email");
-                                String created_at = user.getString("created_at");
+                                String created_at = Calendar.getInstance().getTime().toString();
 
                                 // Inserting row in users table
                                 //db.addUser(name, email, uid, created_at);
+                                if(!name.isEmpty() && !uid.isEmpty()){
+                                    long id = dbHandler.insertUser(name,uid); //add date too
+                                    Log.d("DB", "New user: " + id);
+                                }
 
                                 //launch main activity
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("uid",uid);
+
                                 startActivity(intent);
                                 finish();
                             } else {
@@ -145,6 +150,7 @@ public class LoginActivity extends Activity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email", email);
                 params.put("password", password);
+                params.put("token", "safdm786nb78jlka7895");
 
                 return params;
             }
@@ -153,6 +159,4 @@ public class LoginActivity extends Activity {
         //adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
-
-
 }

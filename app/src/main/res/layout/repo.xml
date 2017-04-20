@@ -4,21 +4,17 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
 
-
-    <LinearLayout
-        android:id="@+id/log_git_form"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingEnd="40dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:paddingStart="40dp">
+        android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/stat_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorPrimary"
             android:gravity="center"
@@ -26,66 +22,94 @@
             android:paddingTop="10dp"
             android:text="Sign in with your Github account!"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/log_git_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Git username"
-            android:textColor="#ffffff" />
+            android:layout_below="@+id/stat_title"
+            android:orientation="vertical"
+            android:paddingEnd="40dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingStart="40dp">
 
-        <EditText
-            android:id="@+id/log_git_uname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@android:drawable/ic_menu_myplaces"
-            android:drawableStart="@android:drawable/ic_menu_myplaces"
-            android:textColor="#ffffff" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Git local name"
+                android:textColor="#ffffff" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Git Url"
-            android:textColor="#ffffff" />
+            <EditText
+                android:id="@+id/log_git_local_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@android:drawable/ic_menu_agenda"
+                android:drawableStart="@android:drawable/ic_menu_agenda"
+                android:textColor="#ffffff" />
 
-        <EditText
-            android:id="@+id/log_git_url"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@android:drawable/ic_dialog_map"
-            android:drawableStart="@android:drawable/ic_dialog_map"
-            android:lines="1"
-            android:textColor="#ffffff" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Git username"
+                android:textColor="#ffffff" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            android:textColor="#ffffff" />
+            <EditText
+                android:id="@+id/log_git_uname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@android:drawable/ic_menu_myplaces"
+                android:drawableStart="@android:drawable/ic_menu_myplaces"
+                android:textColor="#ffffff" />
 
-        <EditText
-            android:id="@+id/log_git_pswd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-            android:drawableStart="@android:drawable/ic_lock_idle_lock"
-            android:inputType="textPassword"
-            android:lines="1"
-            android:textColor="#ffffff" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Git Url"
+                android:textColor="#ffffff" />
 
-        <Button
-            android:id="@+id/log_git_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorPrimary"
-            android:text="Add"
-            android:textColor="#ffffff" />
+            <EditText
+                android:id="@+id/log_git_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@android:drawable/ic_dialog_map"
+                android:drawableStart="@android:drawable/ic_dialog_map"
+                android:lines="1"
+                android:textColor="#ffffff" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:id="@+id/log_git_pswd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+                android:drawableStart="@android:drawable/ic_lock_idle_lock"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/log_git_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimary"
+                android:text="Add"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

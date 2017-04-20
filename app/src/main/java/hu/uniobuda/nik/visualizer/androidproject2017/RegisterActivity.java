@@ -22,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +33,8 @@ public class RegisterActivity extends Activity {
     TextView regLink;
     ProgressDialog pDialog;
 
+    DBHandler dbHandler;
+
     TextView unameTextView;
     TextView mailTextView;
     TextView pswdTextView;
@@ -40,6 +43,7 @@ public class RegisterActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+        dbHandler = new DBHandler(this);
 
         unameTextView = (TextView) findViewById(R.id.reg_uname);
         mailTextView = (TextView) findViewById(R.id.reg_mail);
@@ -110,23 +114,26 @@ public class RegisterActivity extends Activity {
                             //check for error node in json
                             if (!error) {
                                 // user successfully registered in
-                                // Create login session
-                                //session.setLogin(true);
-
                                 // Now store the user in SQLite
                                 String uid = jObj.getString("uid");
 
                                 JSONObject user = jObj.getJSONObject("user");
                                 String name = user.getString("name");
                                 String email = user.getString("email");
-                                String created_at = user.getString("created_at");
+                                String created_at = Calendar.getInstance().getTime().toString();
 
                                 // Inserting row in users table
                                 //db.addUser(name, email, uid, created_at);
+                                if (!name.isEmpty() && !uid.isEmpty()) {
+                                    long id = dbHandler.insertUser(name, uid); //add date too
+                                    Log.d("DB", "New user: " + id);
+                                }
 
-                                //launch login activity
+                                //launch main activity
                                 //Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                intent.putExtra("uid",uid);
+
                                 startActivity(intent);
                                 finish();
                             } else {
@@ -152,6 +159,7 @@ public class RegisterActivity extends Activity {
             protected Map<String, String> getParams() {
                 //posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("token", "safdm786nb78jlka7895");
                 params.put("name", username);
                 params.put("email", email);
                 params.put("password", password);

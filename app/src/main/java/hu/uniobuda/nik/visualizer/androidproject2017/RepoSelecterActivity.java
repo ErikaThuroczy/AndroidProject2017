@@ -28,6 +28,7 @@ import static android.content.ContentValues.TAG;
 public class RepoSelecterActivity extends AppCompatActivity {
     Button repoAddBtn;
     ProgressDialog pDialog;
+    TextView gitLocalNameTextView;
     TextView gitunameTextView;
     TextView gitUrlTextView;
     TextView gitpswdTextView;
@@ -40,6 +41,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
         pDialog = new ProgressDialog(this);
 
+        gitLocalNameTextView = (TextView) findViewById(R.id.log_git_local_name);
         gitunameTextView = (TextView) findViewById(R.id.log_git_uname);
         gitUrlTextView = (TextView) findViewById(R.id.log_git_url);
         gitpswdTextView = (TextView) findViewById(R.id.log_git_pswd);
@@ -48,13 +50,14 @@ public class RepoSelecterActivity extends AppCompatActivity {
         repoAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String idname = gitLocalNameTextView.getText().toString().trim();
                 String uname = gitunameTextView.getText().toString().trim();
                 String url = gitUrlTextView.getText().toString().trim();
                 String pswd = gitpswdTextView.getText().toString().trim();
 
                 //check for empty data in the form
-                if (!uname.isEmpty() && !url.isEmpty() && !pswd.isEmpty()) {
-                    checkGitLogin(uname, url, pswd);
+                if (!idname.isEmpty() &&!uname.isEmpty() && !url.isEmpty() && !pswd.isEmpty()) {
+                    checkGitLogin(idname, uname, url, pswd);
                 } else {
                     //prompt user to enter credentials
                     Toast.makeText(getApplicationContext(), "Please enter the credentials!", Toast.LENGTH_LONG).show();
@@ -70,7 +73,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
         }
     }
 
-    private void checkGitLogin(final String username, final String url, final String password) {
+    private void checkGitLogin(final String idname, final String username, final String url, final String password) {
         //tag used to cancel the request
         String tag_string_req = "log_git_add";
 
@@ -92,21 +95,16 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
                             //check for error node in json
                             if (!error) {
-                                // user successfully logged in
-                                // Create login session
-                                //session.setLogin(true);
-
-                                // Now store the repo in SQLite
-                                String uid = jObj.getString("uid");
-
-                                JSONObject repo = jObj.getJSONObject("repo");
-                                String name = repo.getString("name");
+                                // Now store the new item in SQLite
+                                String repo_id_name = jObj.getString("repo_id_name");
+                                String repo_url = jObj.getString("repo_url");
 
                                 // Inserting row in repo table
                                 //db.addRepo(repo);
 
                                 //launch main activity
                                 Intent intent = new Intent(RepoSelecterActivity.this, MainActivity.class);
+                                //putextra uid ?
                                 startActivity(intent);
                                 finish();
                             } else {
@@ -132,9 +130,12 @@ public class RepoSelecterActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 //posting parameters to git login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("url", url);
-                params.put("password", password);
+                params.put("token", "safdm786nb78jlka7895");
+                params.put("uid", getIntent().getStringExtra("uid"));
+                params.put("repo_id_name ", idname);
+                params.put("repo_url", url);
+                params.put("repo_user", username);
+                params.put("repo_password", password);
 
                 return params;
             }

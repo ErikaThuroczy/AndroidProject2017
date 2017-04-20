@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                             //check for error node in json
                             if (!error) {
                                 // user successfully got statisitcs
-
                                 // Now store the stat in SQLite
                                 String uid = jObj.getString("uid");
 
@@ -114,6 +113,14 @@ public class MainActivity extends AppCompatActivity {
 
                                 //launch main activity
                                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                                intent.putExtra("author",auth);
+                                intent.putExtra("total_commit",totalCommit);
+                                intent.putExtra("elapsed_time",elapsedTime);
+                                intent.putExtra("most_commit_count",commitWinnerByCount);
+                                intent.putExtra("most_commit_size",commitWinnerBySize);
+                                intent.putExtra("busiest_period",busiestPeriod);
+                                intent.putExtra("other",other);
+
                                 startActivity(intent);
                                 finish();
                             } else {
@@ -139,7 +146,9 @@ public class MainActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 //posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("repo", selected);
+                params.put("token", "safdm786nb78jlka7895");
+                params.put("uid", getIntent().getStringExtra("uid"));
+                params.put("repo_id_name", selected);
 
                 return params;
             }
