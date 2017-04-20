@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         StringRequest strReq = new StringRequest(
                 Request.Method.POST,
-                AppConfig.URL_LOGIN,
+                AppConfig.URL_REPO_STAT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

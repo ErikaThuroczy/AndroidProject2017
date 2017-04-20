@@ -30,7 +30,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
     ProgressDialog pDialog;
     TextView gitLocalNameTextView;
     TextView gitunameTextView;
-    TextView gitUrlTextView;
+    TextView gitRepoNameTextView;
     TextView gitpswdTextView;
 
     @Override
@@ -43,7 +43,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
         gitLocalNameTextView = (TextView) findViewById(R.id.log_git_local_name);
         gitunameTextView = (TextView) findViewById(R.id.log_git_uname);
-        gitUrlTextView = (TextView) findViewById(R.id.log_git_url);
+        gitRepoNameTextView = (TextView) findViewById(R.id.log_git_repo_name);
         gitpswdTextView = (TextView) findViewById(R.id.log_git_pswd);
 
         repoAddBtn = (Button) findViewById(R.id.log_git_add);
@@ -52,12 +52,12 @@ public class RepoSelecterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String idname = gitLocalNameTextView.getText().toString().trim();
                 String uname = gitunameTextView.getText().toString().trim();
-                String url = gitUrlTextView.getText().toString().trim();
+                String repoName = gitRepoNameTextView.getText().toString().trim();
                 String pswd = gitpswdTextView.getText().toString().trim();
 
                 //check for empty data in the form
-                if (!idname.isEmpty() &&!uname.isEmpty() && !url.isEmpty() && !pswd.isEmpty()) {
-                    checkGitLogin(idname, uname, url, pswd);
+                if (!idname.isEmpty() &&!uname.isEmpty() && !repoName.isEmpty() && !pswd.isEmpty()) {
+                    checkGitLogin(idname, uname, repoName, pswd);
                 } else {
                     //prompt user to enter credentials
                     Toast.makeText(getApplicationContext(), "Please enter the credentials!", Toast.LENGTH_LONG).show();
@@ -73,7 +73,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
         }
     }
 
-    private void checkGitLogin(final String idname, final String username, final String url, final String password) {
+    private void checkGitLogin(final String idname, final String username, final String repoName, final String password) {
         //tag used to cancel the request
         String tag_string_req = "log_git_add";
 
@@ -82,7 +82,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
         StringRequest strReq = new StringRequest(
                 Request.Method.POST,
-                AppConfig.URL_LOGIN,
+                AppConfig.URL_REPO_ADD,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -97,7 +97,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
                             if (!error) {
                                 // Now store the new item in SQLite
                                 String repo_id_name = jObj.getString("repo_id_name");
-                                String repo_url = jObj.getString("repo_url");
+                                String repo_name = jObj.getString("repo_name");
 
                                 // Inserting row in repo table
                                 //db.addRepo(repo);
@@ -133,7 +133,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
                 params.put("token", "safdm786nb78jlka7895");
                 params.put("uid", getIntent().getStringExtra("uid"));
                 params.put("repo_id_name ", idname);
-                params.put("repo_url", url);
+                params.put("repo_name", repoName);
                 params.put("repo_user", username);
                 params.put("repo_password", password);
 

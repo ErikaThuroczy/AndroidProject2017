@@ -70,11 +70,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Git Url"
+                android:text="Git Repository Name"
                 android:textColor="#ffffff" />
 
             <EditText
-                android:id="@+id/log_git_url"
+                android:id="@+id/log_git_repo_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
