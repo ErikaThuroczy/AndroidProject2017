@@ -4,11 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class StatisticsActivity extends AppCompatActivity {
-    Button statBackBtn;
+    TextView statBack;
     String auth;
     String totalCommit;
     String elapsedTime;
@@ -53,8 +52,8 @@ public class StatisticsActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.stat_other)).setText(other);
         }
 
-        statBackBtn = (Button) findViewById(R.id.stat_back);
-        statBackBtn.setOnClickListener(new View.OnClickListener() {
+        statBack = (TextView) findViewById(R.id.stat_title);
+        statBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

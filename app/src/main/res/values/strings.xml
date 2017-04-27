@@ -1,3 +1,27 @@
 <resources>
-    <string name="app_name">AndroidProject2017</string>
+    <string name="app_name">Git visualizer</string>
+    <string name="logo">Logo</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="not_a_member_register_here">Not a member? Register here</string>
+
+    <string name="register_an_account">Register an account!</string>
+    <string name="register">Register</string>
+    <string name="already_registered_login_here">Already registered! Login here</string>
+
+    <string name="sign_in_with_your_github_account">Sign in with your Github account!</string>
+    <string name="git_local_name">Git local name</string>
+    <string name="git_username">Git username</string>
+    <string name="git_repository_name">Git Repository Name</string>
+    <string name="add">Add</string>
+
+    <string name="repo_statistics">Repo statistics</string>
+    <string name="author">Author</string>
+    <string name="total_commits">Total commits</string>
+    <string name="elapsed_time">Elapsed time</string>
+    <string name="greatest_number_of_commits_by_size">Greatest number of commits by size</string>
+    <string name="greatest_number_of_commits_by_count">Greatest number of commits by count</string>
+    <string name="busiest_period">Busiest period</string>
+    <string name="others">Others</string>
 </resources>

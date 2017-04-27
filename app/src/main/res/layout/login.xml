@@ -2,74 +2,78 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:padding="15dp">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/log_form"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <LinearLayout
-            android:id="@+id/log_form"
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/background_light"
+            android:contentDescription="@string/logo"
+            android:minHeight="100dp" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/colorAccent"
-                android:minHeight="180dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            android:textColor="#ffffff" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Email" />
+        <EditText
+            android:id="@+id/log_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp"
+            android:drawableLeft="@android:drawable/sym_action_email"
+            android:drawableStart="@android:drawable/sym_action_email"
+            android:lines="1"
+            android:textColor="#ffffff" />
+        <!--android:inputType="textEmailAddress"-->
 
-            <EditText
-                android:id="@+id/log_mail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="5dp"
-                android:lines="1"
-                android:drawableLeft="@android:drawable/sym_action_email"
-                android:drawableStart="@android:drawable/sym_action_email"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+            android:textColor="#ffffff" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Password" />
+        <EditText
+            android:id="@+id/log_pswd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:textColor="#ffffff" />
 
-            <EditText
-                android:id="@+id/log_pswd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:lines="1"
-                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-                android:drawableStart="@android:drawable/ic_lock_idle_lock"/>
+        <Button
+            android:id="@+id/log_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/login"
+            android:textColor="#ffffff" />
 
-            <Button
-                android:id="@+id/log_log"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Login" />
-
-            <TextView
-                android:id="@+id/log_link"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Not a member? Register here"
-                android:textColor="@color/colorAccent"
-                android:textSize="18dip" />
-        </LinearLayout>
-
-
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/log_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/not_a_member_register_here"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
+    </LinearLayout>
 </ScrollView>

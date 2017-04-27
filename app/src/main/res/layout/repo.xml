@@ -20,7 +20,7 @@
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="Sign in with your Github account!"
+            android:text="@string/sign_in_with_your_github_account"
             android:textColor="#ffffff"
             android:textSize="16sp" />
 
@@ -38,7 +38,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Git local name"
+                android:text="@string/git_local_name"
                 android:textColor="#ffffff" />
 
             <EditText
@@ -54,7 +54,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Git username"
+                android:text="@string/git_username"
                 android:textColor="#ffffff" />
 
             <EditText
@@ -70,7 +70,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Git Repository Name"
+                android:text="@string/git_repository_name"
                 android:textColor="#ffffff" />
 
             <EditText
@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Password"
+                android:text="@string/password"
                 android:textColor="#ffffff" />
 
             <EditText
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@color/colorPrimary"
-                android:text="Add"
+                android:text="@string/add"
                 android:textColor="#ffffff" />
 
         </LinearLayout>

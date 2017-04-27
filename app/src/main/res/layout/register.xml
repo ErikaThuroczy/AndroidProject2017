@@ -1,78 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
 
-    <LinearLayout
-        android:id="@+id/reg_form"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Full name" />
-
-        <EditText
-            android:id="@+id/reg_uname"
+            android:id="@+id/stat_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@android:drawable/ic_menu_myplaces"
-            android:drawableStart="@android:drawable/ic_menu_myplaces"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email" />
-
-        <EditText
-            android:id="@+id/reg_mail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="5dp"
-            android:lines="1"
-            android:drawableLeft="@android:drawable/sym_action_email"
-            android:drawableStart="@android:drawable/sym_action_email"/>
-        <!--android:inputType="textEmailAddress"-->
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Password" />
-
-        <EditText
-            android:id="@+id/reg_pswd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:inputType="textPassword"
-            android:lines="1"
-            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-            android:drawableStart="@android:drawable/ic_lock_idle_lock" />
-
-        <Button
-            android:id="@+id/reg_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
             android:layout_marginTop="10dp"
-            android:text="Register" />
+            android:background="@color/colorPrimary"
+            android:gravity="left"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/register_an_account"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/reg_link"
+        <LinearLayout
+            android:id="@+id/reg_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Already registered! Login here"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:layout_below="@+id/stat_title"
+            android:orientation="vertical"
+            android:paddingEnd="40dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingStart="40dp">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Full name"
+                android:textColor="#ffffff" />
 
+            <EditText
+                android:id="@+id/reg_uname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@android:drawable/ic_menu_myplaces"
+                android:drawableStart="@android:drawable/ic_menu_myplaces"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:id="@+id/reg_mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@android:drawable/sym_action_email"
+                android:drawableStart="@android:drawable/sym_action_email"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:id="@+id/reg_pswd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+                android:drawableStart="@android:drawable/ic_lock_idle_lock"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:textColor="#ffffff" />
+            <!--android:inputType="textEmailAddress"-->
+
+            <Button
+                android:id="@+id/reg_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/register"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/reg_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/already_registered_login_here"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
 </ScrollView>
