@@ -1,10 +1,8 @@
-package hu.uniobuda.nik.visualizer.androidproject2017;
+package hu.uniobuda.nik.visualizer.androidproject2017.Helpers;
 
 import android.app.Application;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;

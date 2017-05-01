@@ -23,7 +23,7 @@
             android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:text="@string/register_an_account"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorWhite"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Full name"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <EditText
                 android:id="@+id/reg_uname"
@@ -51,13 +51,13 @@
                 android:layout_marginTop="5dp"
                 android:drawableLeft="@android:drawable/ic_menu_myplaces"
                 android:drawableStart="@android:drawable/ic_menu_myplaces"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/email"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <EditText
                 android:id="@+id/reg_mail"
@@ -67,13 +67,13 @@
                 android:layout_marginTop="5dp"
                 android:drawableLeft="@android:drawable/sym_action_email"
                 android:drawableStart="@android:drawable/sym_action_email"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/password"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <EditText
                 android:id="@+id/reg_pswd"
@@ -84,7 +84,7 @@
                 android:drawableStart="@android:drawable/ic_lock_idle_lock"
                 android:inputType="textPassword"
                 android:lines="1"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
             <!--android:inputType="textEmailAddress"-->
 
             <Button
@@ -94,7 +94,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/colorPrimary"
                 android:text="@string/register"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/reg_link"

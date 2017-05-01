@@ -18,15 +18,16 @@
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:background="@android:color/background_light"
+            android:background="@color/colorWhite"
             android:contentDescription="@string/logo"
+            android:maxHeight="300dp"
             android:minHeight="100dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/email"
-            android:textColor="#ffffff" />
+            android:textColor="@color/colorWhite" />
 
         <EditText
             android:id="@+id/log_mail"
@@ -37,14 +38,14 @@
             android:drawableLeft="@android:drawable/sym_action_email"
             android:drawableStart="@android:drawable/sym_action_email"
             android:lines="1"
-            android:textColor="#ffffff" />
+            android:textColor="@color/colorWhite" />
         <!--android:inputType="textEmailAddress"-->
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/password"
-            android:textColor="#ffffff" />
+            android:textColor="@color/colorWhite" />
 
         <EditText
             android:id="@+id/log_pswd"
@@ -54,7 +55,7 @@
             android:drawableStart="@android:drawable/ic_lock_idle_lock"
             android:inputType="textPassword"
             android:lines="1"
-            android:textColor="#ffffff" />
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/log_log"
@@ -63,7 +64,7 @@
             android:layout_marginTop="5dp"
             android:background="@color/colorPrimary"
             android:text="@string/login"
-            android:textColor="#ffffff" />
+            android:textColor="@color/colorWhite" />
 
         <TextView
             android:id="@+id/log_link"

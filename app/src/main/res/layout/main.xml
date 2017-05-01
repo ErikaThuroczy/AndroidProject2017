@@ -3,12 +3,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hu.uniobuda.nik.visualizer.androidproject2017.MainActivity">
+    android:background="@color/colorPrimaryDark"
+    tools:context="hu.uniobuda.nik.visualizer.androidproject2017.Activities.RepoSelecterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/main_repo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:gravity="left"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:text="Git simulator!"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/main_more"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@android:drawable/ic_dialog_dialer"
+            android:drawableStart="@android:drawable/ic_dialog_dialer"
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp" />
 
         <ListView
             android:id="@+id/main_list"
@@ -16,53 +47,27 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" />
-
-        <Button
-            android:id="@+id/main_add"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="5dp"
-            android:paddingStart="5dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:drawableLeft="@android:drawable/ic_menu_add"
-            android:drawableStart="@android:drawable/ic_menu_add" />
-
-        <TextView
-            android:id="@+id/main_repo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/main_list"
+            android:layout_below="@+id/main_repo"
             android:layout_marginTop="20dp"
+            android:minHeight="200dp"
             android:paddingEnd="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingStart="10dp"
-            android:text="Git simulator!"
-            android:textSize="20sp" />
+            android:paddingStart="10dp" />
 
         <Button
-            android:id="@+id/main_more"
+            android:id="@+id/main_add"
             android:layout_width="42dp"
             android:layout_height="43dp"
-            android:layout_marginTop="25dp"
-            android:paddingLeft="5dp"
-            android:paddingStart="5dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/main_add"
-            android:drawableLeft="@android:drawable/ic_dialog_dialer"
-            android:drawableStart="@android:drawable/ic_dialog_dialer" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/main_more"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorAccent"
-            android:minHeight="300dp" />
+            android:layout_below="@id/main_more"
+            android:layout_marginTop="25dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@android:drawable/ic_menu_add"
+            android:drawableStart="@android:drawable/ic_menu_add"
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp" />
 
     </RelativeLayout>
 </ScrollView>

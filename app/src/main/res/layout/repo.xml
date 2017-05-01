@@ -21,7 +21,7 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:text="@string/sign_in_with_your_github_account"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorWhite"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/git_local_name"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <EditText
                 android:id="@+id/log_git_local_name"
@@ -49,13 +49,13 @@
                 android:layout_marginTop="5dp"
                 android:drawableLeft="@android:drawable/ic_menu_agenda"
                 android:drawableStart="@android:drawable/ic_menu_agenda"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/git_username"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <EditText
                 android:id="@+id/log_git_uname"
@@ -65,13 +65,13 @@
                 android:layout_marginTop="5dp"
                 android:drawableLeft="@android:drawable/ic_menu_myplaces"
                 android:drawableStart="@android:drawable/ic_menu_myplaces"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/git_repository_name"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <EditText
                 android:id="@+id/log_git_repo_name"
@@ -82,13 +82,13 @@
                 android:drawableLeft="@android:drawable/ic_dialog_map"
                 android:drawableStart="@android:drawable/ic_dialog_map"
                 android:lines="1"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/password"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <EditText
                 android:id="@+id/log_git_pswd"
@@ -99,7 +99,7 @@
                 android:drawableStart="@android:drawable/ic_lock_idle_lock"
                 android:inputType="textPassword"
                 android:lines="1"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
             <Button
                 android:id="@+id/log_git_add"
@@ -108,7 +108,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/colorPrimary"
                 android:text="@string/add"
-                android:textColor="#ffffff" />
+                android:textColor="@color/colorWhite" />
 
         </LinearLayout>
     </RelativeLayout>

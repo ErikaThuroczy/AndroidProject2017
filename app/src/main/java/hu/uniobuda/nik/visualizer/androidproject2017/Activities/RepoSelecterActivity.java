@@ -1,4 +1,4 @@
-package hu.uniobuda.nik.visualizer.androidproject2017;
+package hu.uniobuda.nik.visualizer.androidproject2017.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -6,15 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,14 +24,18 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
+import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
+import hu.uniobuda.nik.visualizer.androidproject2017.Models.Statistics;
+import hu.uniobuda.nik.visualizer.androidproject2017.R;
+
 import static android.content.ContentValues.TAG;
 
-public class MainActivity extends AppCompatActivity {
+public class RepoSelecterActivity extends AppCompatActivity {
     ListView mainStatList;
     Button mainAddBtn;
     Button mainStatBtn;
     ProgressDialog pDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,21 @@ public class MainActivity extends AppCompatActivity {
 
         mainAddBtn = (Button) findViewById(R.id.main_add);
         mainStatBtn = (Button) findViewById(R.id.main_more);
+
+        mainStatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("test","clicked on list!");
+                /*
+                GitData data = //get gitData;
+
+                Intent intent = new Intent(RepoSelecterActivity.this, VisualizerActivity.class);
+                intent.putExtra("git_data", data);
+                startActivity(intent);*/
+            }
+        });
+
+
         mainStatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //open repo adder
-                Intent myIntent = new Intent(getApplicationContext(), RepoSelecterActivity.class);
+                Intent myIntent = new Intent(getApplicationContext(), RepoAdderActivity.class);
                 startActivity(myIntent);
             }
         });
@@ -100,27 +121,13 @@ public class MainActivity extends AppCompatActivity {
                                 // Now store the stat in SQLite
                                 String uid = jObj.getString("uid");
 
-                                JSONObject stat = jObj.getJSONObject("repo_stat");
-                                String auth = stat.getString("author");
-                                long totalCommit = stat.getLong("total_commit");
-                                String elapsedTime = stat.getString("elapsed_time");
-                                String commitWinnerByCount = stat.getString("most_commit_count");
-                                String commitWinnerBySize = stat.getString("most_commit_size");
-                                String busiestPeriod = stat.getString("busiest_period");
-                                String other = stat.getString("other");
-
-                                // Inserting row in users table
-                                //db.addStat(statistics..);
+                                Gson gson = new GsonBuilder().create();
+                                Statistics stat = gson.fromJson(String.valueOf(jObj.getJSONObject("repo_stat")), Statistics.class);
 
                                 //launch main activity
-                                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                                intent.putExtra("author",auth);
-                                intent.putExtra("total_commit",totalCommit);
-                                intent.putExtra("elapsed_time",elapsedTime);
-                                intent.putExtra("most_commit_count",commitWinnerByCount);
-                                intent.putExtra("most_commit_size",commitWinnerBySize);
-                                intent.putExtra("busiest_period",busiestPeriod);
-                                intent.putExtra("other",other);
+                                Intent intent = new Intent(RepoSelecterActivity.this, StatisticsActivity.class);
+                                intent.putExtra("repo_stat", stat);
+                                Log.d(TAG, "Statistics : " + stat.getAuthor());
 
                                 startActivity(intent);
                                 finish();

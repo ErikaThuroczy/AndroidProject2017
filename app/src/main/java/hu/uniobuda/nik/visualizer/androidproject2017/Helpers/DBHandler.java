@@ -1,4 +1,4 @@
-package hu.uniobuda.nik.visualizer.androidproject2017;
+package hu.uniobuda.nik.visualizer.androidproject2017.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;

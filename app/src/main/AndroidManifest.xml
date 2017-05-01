@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".AppController"
+        android:name=".Helpers.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:label="Git Simulator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,14 +21,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Activities.RegisterActivity"
             android:label="Register" />
         <activity
-            android:name=".MainActivity"
-            android:label="Visualizer" />
+            android:name=".Activities.RepoSelecterActivity"
+            android:label="Select repo" />
         <activity
-            android:name=".RepoSelecterActivity"
+            android:name=".Activities.RepoAdderActivity"
             android:label="Add repo" />
+        <activity
+            android:name=".Activities.StatisticsActivity"
+            android:label="Statistics" />
+        <activity
+            android:name=".Activities.VisualizerActivity"
+            android:label="Visualizer" />
     </application>
 
 </manifest>
