@@ -180,7 +180,7 @@ public class LoginActivity extends Activity {
                 //posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email", email);
-                params.put("password", password);
+                params.put("password", makeSHA1hash(password));
                 params.put("token", AppConfig.TOKEN);
 
                 return params;

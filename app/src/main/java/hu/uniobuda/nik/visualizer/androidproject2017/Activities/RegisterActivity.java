@@ -20,6 +20,9 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -94,6 +97,29 @@ public class RegisterActivity extends Activity {
         }
     }
 
+    private String makeSHA1hash(String pswd){
+
+        final MessageDigest digest;
+        byte[] result = new byte[0];
+        try {
+            digest = MessageDigest.getInstance("SHA-1");
+            result = digest.digest(pswd.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        // Another way to make HEX, my previous post was only the method like your solution
+        StringBuilder sb = new StringBuilder();
+
+        for (byte b : result) // Bejárom a result tömböt.
+        {
+            sb.append(String.format("%02X", b));
+        }
+        String messageDigest = sb.toString(); //Sha-1 hashed pswd
+        return messageDigest;
+    }
+
     private void checkRegister(final String username, final String email, final String password) {
         //tag used to cancel the request
         String tag_string_req = "req_register";
@@ -165,7 +191,7 @@ public class RegisterActivity extends Activity {
                 params.put("token", "safdm786nb78jlka7895");
                 params.put("name", username);
                 params.put("email", email);
-                params.put("password", password);
+                params.put("password", makeSHA1hash(password));
 
                 return params;
             }
