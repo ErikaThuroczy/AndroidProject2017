@@ -2,6 +2,9 @@ package hu.uniobuda.nik.visualizer.androidproject2017.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,17 +24,20 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
+import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.DBHandler;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Statistics;
 import hu.uniobuda.nik.visualizer.androidproject2017.R;
 
 import static android.content.ContentValues.TAG;
 
 public class RepoSelecterActivity extends AppCompatActivity {
+    DBHandler db;
     ListView mainStatList;
     Button mainAddBtn;
     Button mainStatBtn;
@@ -41,6 +47,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        db = new DBHandler(this);
 
         mainStatList = (ListView) findViewById(R.id.main_list);
         pDialog = new ProgressDialog(this);
@@ -51,7 +58,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
         mainStatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("test","clicked on list!");
+                Log.d("test", "clicked on list!");
                 /*
                 GitData data = //get gitData;
 
@@ -65,16 +72,40 @@ public class RepoSelecterActivity extends AppCompatActivity {
         mainStatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String selectedListItem = mainStatList.getSelectedItem().toString();
-                checkStatistics("teszt");
-                /*/check for empty data
-                if (!selectedListItem.isEmpty()) {
-                    checkStatistics(selectedListItem);
-                }
-                if {
+                String selectedListItem = "androidos";//mainStatList.getSelectedItem().toString();
+                //checkStatistics("teszt");
+                //check for empty data
+                if (true) {//!selectedListItem.isEmpty()) {
+                    //db has stat info
+                    Log.d(TAG, "Statistics Response: fromDB");
+                    Statistics stat = new Statistics("", "0", "", "", "", "", "");
+                    Cursor c = db.getStatByIdName(selectedListItem);
+                    while (c.moveToNext()) {
+                        String author = c.getString(c.getColumnIndex("Author"));
+                        String totalCommit = c.getString(c.getColumnIndex("TotalCommit"));
+                        String elapsedTime = c.getString(c.getColumnIndex("ElapsedTime"));
+                        String mostCommitCount = c.getString(c.getColumnIndex("MostCommitCount"));
+                        String mostCommitSize = c.getString(c.getColumnIndex("MostCommitSize"));
+                        String busiestPeriod = c.getString(c.getColumnIndex("BusiestPeriod"));
+                        String other = c.getString(c.getColumnIndex("Other"));
+                        stat = new Statistics(author, totalCommit, elapsedTime, mostCommitCount, mostCommitSize, busiestPeriod, other);
+                    }
+                    c.close();
+                    if (!stat.getAuthor().isEmpty()) {
+                        //launch stat activity
+                        Intent intent = new Intent(RepoSelecterActivity.this, StatisticsActivity.class);
+                        intent.putExtra("repo_stat", stat);
+                        Log.d(TAG, "Statistics fromDBauth: " + stat.getAuthor());
+
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        checkStatistics(selectedListItem);
+                    }
+                } else {
                     //prompt user to select a list item
                     Toast.makeText(getApplicationContext(), "Please select a repo!", Toast.LENGTH_LONG).show();
-                }*/
+                }
             }
         });
         mainAddBtn.setOnClickListener(new View.OnClickListener() {
@@ -123,8 +154,9 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
                                 Gson gson = new GsonBuilder().create();
                                 Statistics stat = gson.fromJson(String.valueOf(jObj.getJSONObject("repo_stat")), Statistics.class);
+                                db.InsertIntoSTAT(stat, selected, Calendar.getInstance().getTime().toString());
 
-                                //launch main activity
+                                //launch stat activity
                                 Intent intent = new Intent(RepoSelecterActivity.this, StatisticsActivity.class);
                                 intent.putExtra("repo_stat", stat);
                                 Log.d(TAG, "Statistics : " + stat.getAuthor());

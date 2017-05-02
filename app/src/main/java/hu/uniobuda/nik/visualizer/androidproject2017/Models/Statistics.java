@@ -49,7 +49,15 @@ public class Statistics implements Parcelable {
         busiest_period = parcel.readString();
         other = parcel.readString();
     }
-
+    public Statistics(String author, String totalCommit, String elapsedTime, String mostCommitCount, String mostCommitSize, String busiestPeriod, String other ) {
+        this.author = author;
+        this.total_commit = Long.parseLong(totalCommit);
+        this.elapsed_time = elapsedTime;
+        this.most_commit_count = mostCommitCount;
+        this.most_commit_size = mostCommitSize;
+        this.busiest_period = busiestPeriod;
+        this.other = other;
+    }
     public static final Creator<Statistics> CREATOR = new Creator<Statistics>() {
         @Override
         public Statistics createFromParcel(Parcel in) {
