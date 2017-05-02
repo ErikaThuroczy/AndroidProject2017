@@ -3,8 +3,6 @@ package hu.uniobuda.nik.visualizer.androidproject2017.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +19,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +31,7 @@ import java.util.Map;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.DBHandler;
+import hu.uniobuda.nik.visualizer.androidproject2017.Models.RepoAdaper;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Statistics;
 import hu.uniobuda.nik.visualizer.androidproject2017.R;
 
@@ -46,7 +47,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.selecter);
         db = new DBHandler(this);
 
         mainStatList = (ListView) findViewById(R.id.main_list);
@@ -54,6 +55,9 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
         mainAddBtn = (Button) findViewById(R.id.main_add);
         mainStatBtn = (Button) findViewById(R.id.main_more);
+
+        getRepoList();
+
 
         mainStatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -125,6 +129,77 @@ public class RepoSelecterActivity extends AppCompatActivity {
             pDialog.dismiss();
         }
     }
+
+    private void getRepoList() {
+        //tag used to cancel the request
+        String tag_string_req = "main_repo_list";
+
+        pDialog.setMessage("Loading repository list ...");
+        showHideDialog();
+
+        StringRequest strReq = new StringRequest(
+                Request.Method.POST,
+                AppConfig.URL_REPO_LIST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, "RepoList Response: " + response.toString());
+                        showHideDialog();
+
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            boolean error = jObj.getBoolean("error");
+
+                            //check for error node in json
+                            if (!error) {
+                                // user successfully got repolist
+                                // Now store the repolist in SQLite
+
+                                JSONArray repos = jObj.getJSONArray("repos");
+                                int count = jObj.getInt("count");
+
+                                ArrayList<String> arrayList = new ArrayList<>();
+                                for (int i = 0; i < count; i++)
+                                {
+                                    Log.d("repo", repos.getJSONObject(i).getString("repo_id_name"));
+                                    db.InsertIntoREPOLIST(repos.getJSONObject(i).getString("repo_id_name"), Calendar.getInstance().getTime().toString());
+                                    arrayList.add(repos.getJSONObject(i).getString("repo_id_name"));
+                                }
+                                RepoAdaper adapter = new RepoAdaper(arrayList);
+                                mainStatList.setAdapter(adapter);
+                            } else {
+                                //error in login - error message
+                                String errorMsg = jObj.getString("error_msg");
+                                Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "RepoList Error: " + error.getMessage());
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        showHideDialog();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                //posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", "safdm786nb78jlka7895");
+                params.put("uid", getIntent().getStringExtra("uid"));
+
+                return params;
+            }
+        };
+        //adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
 
     private void checkStatistics(final String selected) {
         //tag used to cancel the request

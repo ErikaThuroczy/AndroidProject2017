@@ -72,12 +72,12 @@ public class LoginActivity extends Activity {
         //listener for reg new acc link
         logLnk = (TextView) findViewById(R.id.log_link);
         logLnk.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent myIntent = new Intent(getApplicationContext(), RegisterActivity.class);
-                  startActivity(myIntent);
-              }
-          }
+                                      @Override
+                                      public void onClick(View v) {
+                                          Intent myIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+                                          startActivity(myIntent);
+                                      }
+                                  }
         );
     }
 
@@ -89,7 +89,7 @@ public class LoginActivity extends Activity {
         }
     }
 
-    private String makeSHA1hash(String pswd){
+    private String makeSHA1hash(String pswd) {
 
         final MessageDigest digest;
         byte[] result = new byte[0];
@@ -150,9 +150,9 @@ public class LoginActivity extends Activity {
                                     Log.d("DB", "New user: " + id);
                                 }*/
 
-                                //launch main activity
+                                //launch selecter activity
                                 Intent intent = new Intent(LoginActivity.this, RepoSelecterActivity.class);
-                                intent.putExtra("uid",uid);
+                                intent.putExtra("uid", uid);
 
                                 startActivity(intent);
                                 finish();
@@ -182,7 +182,7 @@ public class LoginActivity extends Activity {
                 params.put("email", email);
                 params.put("password", makeSHA1hash(password));
                 params.put("token", AppConfig.TOKEN);
-
+                Log.e("SHA1:: ", makeSHA1hash(password));
                 return params;
             }
 

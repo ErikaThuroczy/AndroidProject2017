@@ -106,7 +106,7 @@ public class RepoAdderActivity extends AppCompatActivity {
                                 // Inserting row in repo table
                                 //db.addRepo(repo);
 
-                                //launch main activity
+                                //launch selecter activity
                                 Intent intent = new Intent(RepoAdderActivity.this, RepoSelecterActivity.class);
                                 //putextra uid ?
                                 startActivity(intent);

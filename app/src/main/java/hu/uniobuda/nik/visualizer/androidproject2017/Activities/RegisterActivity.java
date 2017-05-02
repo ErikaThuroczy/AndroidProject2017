@@ -158,7 +158,7 @@ public class RegisterActivity extends Activity {
                                     Log.d("DB", "New user: " + id);
                                 }*/
 
-                                //launch main activity
+                                //launch selecter activity
                                 //Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 Intent intent = new Intent(RegisterActivity.this, RepoSelecterActivity.class);
                                 intent.putExtra("uid",uid);

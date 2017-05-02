@@ -17,6 +17,7 @@ public class DBHandler {
     private final static String DB_NAME = "GitVisualizerDB";
     private final static int DB_VERSION = 1;
     private final static String TABLE_USERS = "Users";
+    private static final String TABLE_REPOLIST = "RepoList";
     private static final String TABLE_STAT = "Stat";
 
     //USERS table
@@ -26,6 +27,11 @@ public class DBHandler {
     private static final String USERS_EMAIL = "Email";
     private static final String USERS_PASSWORD = "Password";
     private static final String USERS_CREATED = "Created";
+
+    //REPOLIST table
+    private static final String REPOLIST_ID = "ID";
+    private static final String REPOLIST_IDNAME = "IdName";
+    private static final String REPOLIST_CREATED = "Created";
 
     //STAT table
     private static final String STAT_ID = "ID";
@@ -39,21 +45,31 @@ public class DBHandler {
     private static final String STAT_OTHER = "Other";
     private static final String STAT_CREATED = "Created";
 
-    private static final String CREATE_TABLE_USERS = "CREATE TABLE if not EXISTS " + TABLE_USERS + "("
-            +
+    private static final String CREATE_TABLE_USERS = "CREATE TABLE if not EXISTS " + TABLE_USERS + "(" +
             USERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             USERS_UID + " VARCHAR(255)," +
             USERS_NAME + " VARCHAR(255)," +
             USERS_EMAIL + " VARCHAR(255)," +
             USERS_PASSWORD + " VARCHAR(255)," +
-            USERS_CREATED + " VARCHAR(255)"
-            + ")";
-
-    private static final String CREATE_TABLE_STAT = "CREATE TABLE if not EXISTS " + TABLE_STAT + "("
-            + STAT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + STAT_ID_NAME + " VARCHAR(255)," + STAT_AUTHOR + " VARCHAR(255)," + STAT_TOTAL_COMMIT + " VARCHAR(255),"
-            + STAT_ELAPSED_TIME + " VARCHAR(255)," + STAT_MOST_COMMIT_COUNT + " VARCHAR(255)," + STAT_MOST_COMMIT_SIZE + " VARCHAR(255),"
-            + STAT_PERIOD + " VARCHAR(255)," + STAT_OTHER + " VARCHAR(255)," + STAT_CREATED + " VARCHAR(255)"
-            + ")";
+            USERS_CREATED + " VARCHAR(255)" +
+            ")";
+    private static final String CREATE_TABLE_REPOLIST = "CREATE TABLE if not EXISTS " + TABLE_REPOLIST + "(" +
+            REPOLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            REPOLIST_IDNAME + " VARCHAR(255)," +
+            REPOLIST_CREATED + " VARCHAR(255)" +
+            ")";
+    private static final String CREATE_TABLE_STAT = "CREATE TABLE if not EXISTS " + TABLE_STAT + "(" +
+            STAT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            STAT_ID_NAME + " VARCHAR(255)," +
+            STAT_AUTHOR + " VARCHAR(255)," +
+            STAT_TOTAL_COMMIT + " VARCHAR(255)," +
+            STAT_ELAPSED_TIME + " VARCHAR(255)," +
+            STAT_MOST_COMMIT_COUNT + " VARCHAR(255)," +
+            STAT_MOST_COMMIT_SIZE + " VARCHAR(255)," +
+            STAT_PERIOD + " VARCHAR(255)," +
+            STAT_OTHER + " VARCHAR(255)," +
+            STAT_CREATED + " VARCHAR(255)" +
+            ")";
 
 
     public DBHandler(Context context) {
@@ -67,8 +83,26 @@ public class DBHandler {
         contentValues.put("Email", email);
         contentValues.put("Password", password);
         contentValues.put("Created", created);
+
         dbHelper.getWritableDatabase().insert(TABLE_USERS, null, contentValues);
-        Log.e("InsertRowUsers", "Insert successful:: Name:" + name + "| Uid: " + uid + "| Email: " + email + "| Created: " + created);
+
+        Log.e(
+                "InsertRowUsers",
+                "Insert successful:: Name:" + name + "| Uid: " + uid + "| Email: " + email + "| Created: " + created
+        );
+    }
+
+    public void InsertIntoREPOLIST(String id_name, String created) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("IdName", id_name);
+        contentValues.put("Created", created);
+
+        dbHelper.getWritableDatabase().insert(TABLE_REPOLIST, null, contentValues);
+
+        Log.e(
+                "InsertRowRepoList",
+                "Insert successful:: IdName:" + id_name + "| Created: " + created
+        );
     }
 
     public void InsertIntoSTAT(Statistics stat, String id_name, String created) {
@@ -82,8 +116,13 @@ public class DBHandler {
         contentValues.put("BusiestPeriod", stat.getBusiest_period());
         contentValues.put("Other", stat.getOther());
         contentValues.put("Created", created);
+
         dbHelper.getWritableDatabase().insert(TABLE_STAT, null, contentValues);
-        Log.e("InsertRowStat", "Insert successful:: IdName:" + id_name + "| Author: " + stat.getAuthor() + "| TotalCommit: " + stat.getTotal_commit() + "| Created: " + created);
+
+        Log.e(
+                "InsertRowStat",
+                "Insert successful:: IdName:" + id_name + "| Author: " + stat.getAuthor() + "| TotalCommit: " + stat.getTotal_commit() + "| Created: " + created
+        );
     }
 
     /*public ArrayList<String> getUsers() {
@@ -140,6 +179,20 @@ public class DBHandler {
         return result;
     }
 
+    public ArrayList<String> getRepoList() {
+        ArrayList<String> array_list = new ArrayList<>();
+
+        Cursor res = dbHelper.getReadableDatabase().query(TABLE_REPOLIST, null, null, null, null, null, null);
+        res.moveToFirst();
+
+        while (!res.isAfterLast()) {
+            array_list.add(res.getString(res.getColumnIndex("IdName")));
+            res.moveToNext();
+        }
+        res.close();
+        return array_list;
+    }
+
     private class DBHelper extends SQLiteOpenHelper {
 
         private DBHelper(Context context) {
@@ -149,8 +202,12 @@ public class DBHandler {
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
             sqLiteDatabase.execSQL(CREATE_TABLE_USERS);
-            sqLiteDatabase.execSQL(CREATE_TABLE_STAT);
             Log.e("CREATE_TABLE_USERS", "CREATE_TABLE_USERS");
+
+            sqLiteDatabase.execSQL(CREATE_TABLE_REPOLIST);
+            Log.e("CREATE_TABLE_REPOLIST", "CREATE_TABLE_REPOLIST");
+
+            sqLiteDatabase.execSQL(CREATE_TABLE_STAT);
             Log.e("CREATE_TABLE_STAT", "CREATE_TABLE_STAT");
         }
 
@@ -158,6 +215,7 @@ public class DBHandler {
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             // FIXME QnD
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_REPOLIST);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_STAT);
             onCreate(sqLiteDatabase);
         }
