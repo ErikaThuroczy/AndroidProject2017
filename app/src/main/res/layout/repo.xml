@@ -84,13 +84,13 @@
                 android:lines="1"
                 android:textColor="@color/colorWhite" />
 
-            <TextView
+            <!--TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/password"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite" /-->
 
-            <EditText
+            <!--EditText
                 android:id="@+id/log_git_pswd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                 android:drawableStart="@android:drawable/ic_lock_idle_lock"
                 android:inputType="textPassword"
                 android:lines="1"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite" /-->
 
             <Button
                 android:id="@+id/log_git_add"

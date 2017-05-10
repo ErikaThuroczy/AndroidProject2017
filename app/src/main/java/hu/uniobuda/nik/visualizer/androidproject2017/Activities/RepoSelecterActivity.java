@@ -261,7 +261,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 //posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("token", "safdm786nb78jlka7895");
+                params.put("token", AppConfig.TOKEN);
                 params.put("uid", getIntent().getStringExtra("uid"));
                 params.put("repo_id_name", selected);
 

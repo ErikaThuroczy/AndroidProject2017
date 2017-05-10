@@ -35,7 +35,7 @@ public class RepoAdderActivity extends AppCompatActivity {
     TextView gitLocalNameTextView;
     TextView gitunameTextView;
     TextView gitRepoNameTextView;
-    TextView gitpswdTextView;
+    //TextView gitpswdTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class RepoAdderActivity extends AppCompatActivity {
         gitLocalNameTextView = (TextView) findViewById(R.id.log_git_local_name);
         gitunameTextView = (TextView) findViewById(R.id.log_git_uname);
         gitRepoNameTextView = (TextView) findViewById(R.id.log_git_repo_name);
-        gitpswdTextView = (TextView) findViewById(R.id.log_git_pswd);
+        //gitpswdTextView = (TextView) findViewById(R.id.log_git_pswd);
 
         repoAddBtn = (Button) findViewById(R.id.log_git_add);
         repoAddBtn.setOnClickListener(new View.OnClickListener() {
@@ -57,11 +57,11 @@ public class RepoAdderActivity extends AppCompatActivity {
                 String idname = gitLocalNameTextView.getText().toString().trim();
                 String uname = gitunameTextView.getText().toString().trim();
                 String repoName = gitRepoNameTextView.getText().toString().trim();
-                String pswd = gitpswdTextView.getText().toString().trim();
+                //String pswd = gitpswdTextView.getText().toString().trim();
 
                 //check for empty data in the form
-                if (!idname.isEmpty() &&!uname.isEmpty() && !repoName.isEmpty() && !pswd.isEmpty()) {
-                    checkGitLogin(idname, uname, repoName, pswd);
+                if (!idname.isEmpty() &&!uname.isEmpty() && !repoName.isEmpty()) {
+                    checkGitLogin(idname, uname, repoName);
                 } else {
                     //prompt user to enter credentials
                     Toast.makeText(getApplicationContext(), "Please enter the credentials!", Toast.LENGTH_LONG).show();
@@ -77,7 +77,7 @@ public class RepoAdderActivity extends AppCompatActivity {
         }
     }
 
-    private void checkGitLogin(final String idname, final String username, final String repoName, final String password) {
+    private void checkGitLogin(final String idname, final String username, final String repoName) {
         //tag used to cancel the request
         String tag_string_req = "log_git_add";
 
@@ -134,12 +134,12 @@ public class RepoAdderActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 //posting parameters to git login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("token", "safdm786nb78jlka7895");
+                params.put("token", AppConfig.TOKEN);
                 params.put("uid", getIntent().getStringExtra("uid"));
                 params.put("repo_id_name ", idname);
                 params.put("repo_name", repoName);
                 params.put("repo_user", username);
-                params.put("repo_password", password);
+                params.put("repo_password", "");
 
                 return params;
             }

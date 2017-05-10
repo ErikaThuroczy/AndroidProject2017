@@ -143,20 +143,18 @@ public class RegisterActivity extends Activity {
                             //check for error node in json
                             if (!error) {
                                 // user successfully registered in
-                                // Now store the user in SQLite
                                 String uid = jObj.getString("uid");
-
                                 JSONObject user = jObj.getJSONObject("user");
-                                String name = user.getString("name");
-                                String email = user.getString("email");
-                                String created_at = Calendar.getInstance().getTime().toString();
 
+                                // Now store the user in SQLite
                                 // Inserting row in users table
-                                //db.addUser(name, email, uid, created_at);
-                                /*if (!name.isEmpty() && !uid.isEmpty()) {
-                                    long id = dbHandler.insertUser(name, uid); //add date too
-                                    Log.d("DB", "New user: " + id);
-                                }*/
+                                Log.d("user", user.getString("name"));
+                                dbHandler.InsertIntoUSERS(
+                                        user.getString("name"),
+                                        user.getString("email"),
+                                        makeSHA1hash(password),
+                                        Calendar.getInstance().getTime().toString()
+                                );
 
                                 //launch selecter activity
                                 //Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -188,11 +186,11 @@ public class RegisterActivity extends Activity {
             protected Map<String, String> getParams() {
                 //posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("token", "safdm786nb78jlka7895");
+                params.put("token", AppConfig.TOKEN);
                 params.put("name", username);
                 params.put("email", email);
                 params.put("password", makeSHA1hash(password));
-
+                Log.e("SHA1:: ", makeSHA1hash(password));
                 return params;
             }
 

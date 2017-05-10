@@ -3,6 +3,7 @@ package hu.uniobuda.nik.visualizer.androidproject2017.Activities;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -29,6 +30,7 @@ import java.util.Map;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.DBHandler;
+import hu.uniobuda.nik.visualizer.androidproject2017.Models.Statistics;
 import hu.uniobuda.nik.visualizer.androidproject2017.R;
 
 import static android.content.ContentValues.TAG;
@@ -53,15 +55,33 @@ public class LoginActivity extends Activity {
         pswdTextView = (TextView) findViewById(R.id.log_pswd);
 
         loginBtn = (Button) findViewById(R.id.log_log);
+        //////////////////////////////////////////////////////////////
+
+        //Check for already registered user
+        Log.d(TAG, "Users Response: fromDB");
+        Cursor c = dbHandler.loadUsers();
+        String email="";
+        String hashdpswd="";
+        while (c.moveToNext()) {
+            email = c.getString(c.getColumnIndex("Email"));
+            hashdpswd = c.getString(c.getColumnIndex("Password"));
+        }
+        c.close();
+        if (!email.isEmpty() && !hashdpswd.isEmpty()) {
+            //try logging in
+            Log.d(TAG, "Users Response: fromDB: "+email+" - "+hashdpswd);
+            checkLogin(email,hashdpswd);
+        }
+
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String mail = mailTextView.getText().toString().trim();
                 String pswd = pswdTextView.getText().toString().trim();
-
                 //check for empty data in the form
                 if (!mail.isEmpty() && !pswd.isEmpty()) {
-                    checkLogin(mail, pswd);
+                    checkLogin(mail, makeSHA1hash(pswd));
                 } else {
                     //prompt user to enter credentials
                     Toast.makeText(getApplicationContext(), "Please enter the credentials!", Toast.LENGTH_LONG).show();
@@ -135,20 +155,7 @@ public class LoginActivity extends Activity {
                             //check for error node in json
                             if (!error) {
                                 // user successfully logged in
-                                // Now store the user in SQLite
                                 String uid = jObj.getString("uid");
-
-                                JSONObject user = jObj.getJSONObject("user");
-                                String name = user.getString("name");
-                                String email = user.getString("email");
-                                String created_at = Calendar.getInstance().getTime().toString();
-
-                                // Inserting row in users table
-                                //db.addUser(name, email, uid, created_at);
-                                /*if(!name.isEmpty() && !uid.isEmpty()){
-                                    long id = dbHandler.insertUser(name,uid); //add date too
-                                    Log.d("DB", "New user: " + id);
-                                }*/
 
                                 //launch selecter activity
                                 Intent intent = new Intent(LoginActivity.this, RepoSelecterActivity.class);
@@ -180,9 +187,9 @@ public class LoginActivity extends Activity {
                 //posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email", email);
-                params.put("password", makeSHA1hash(password));
+                params.put("password", password);
                 params.put("token", AppConfig.TOKEN);
-                Log.e("SHA1:: ", makeSHA1hash(password));
+                Log.e("SHA1:: ", password);
                 return params;
             }
 

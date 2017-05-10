@@ -22,7 +22,7 @@ public class DBHandler {
 
     //USERS table
     private static final String USERS_ID = "ID";
-    private static final String USERS_UID = "UID";
+    //private static final String USERS_UID = "UID";
     private static final String USERS_NAME = "Name";
     private static final String USERS_EMAIL = "Email";
     private static final String USERS_PASSWORD = "Password";
@@ -47,7 +47,7 @@ public class DBHandler {
 
     private static final String CREATE_TABLE_USERS = "CREATE TABLE if not EXISTS " + TABLE_USERS + "(" +
             USERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            USERS_UID + " VARCHAR(255)," +
+            //USERS_UID + " VARCHAR(255)," +
             USERS_NAME + " VARCHAR(255)," +
             USERS_EMAIL + " VARCHAR(255)," +
             USERS_PASSWORD + " VARCHAR(255)," +
@@ -76,9 +76,9 @@ public class DBHandler {
         dbHelper = new DBHelper(context);
     }
 
-    public void InsertIntoUSERS(String uid, String name, String email, String password, String created) {
+    public void InsertIntoUSERS(String name, String email, String password, String created) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put("UID", uid);
+        //contentValues.put("UID", uid);
         contentValues.put("Name", name);
         contentValues.put("Email", email);
         contentValues.put("Password", password);
@@ -88,7 +88,7 @@ public class DBHandler {
 
         Log.e(
                 "InsertRowUsers",
-                "Insert successful:: Name:" + name + "| Uid: " + uid + "| Email: " + email + "| Created: " + created
+                "Insert successful:: Name:" + name + "| Email: " + email + "| Created: " + created
         );
     }
 
@@ -154,7 +154,7 @@ public class DBHandler {
         long id = db.insert(TABLE_USERS, null, values);
         db.close();
         return id;
-    }
+    }*/
 
     public Cursor loadUsers() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -162,7 +162,7 @@ public class DBHandler {
         result.moveToFirst();
         db.close();
         return result;
-    }*/
+    }
     public Cursor loadStat() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor result = db.query(TABLE_STAT, null, null, null, null, null, null);

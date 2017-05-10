@@ -26,8 +26,8 @@ public class StatisticsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics);
-        //Bundle bundle = getIntent().getExtras();
-        Statistics stat = (Statistics) getIntent().getParcelableExtra("repo_stat");
+
+        Statistics stat = getIntent().getParcelableExtra("repo_stat");
 
         if (stat != null) {
             if (!stat.getAuthor().isEmpty()) {
