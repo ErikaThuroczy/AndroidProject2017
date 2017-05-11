@@ -47,8 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="5dp"
-                android:drawableLeft="@android:drawable/ic_menu_agenda"
-                android:drawableStart="@android:drawable/ic_menu_agenda"
+                android:drawableLeft="@drawable/ic_repo_white"
+                android:drawableStart="@drawable/ic_repo_white"
                 android:textColor="@color/colorWhite" />
 
             <TextView
@@ -63,8 +63,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="5dp"
-                android:drawableLeft="@android:drawable/ic_menu_myplaces"
-                android:drawableStart="@android:drawable/ic_menu_myplaces"
+                android:drawableLeft="@drawable/ic_person_white"
+                android:drawableStart="@drawable/ic_person_white"
                 android:textColor="@color/colorWhite" />
 
             <TextView

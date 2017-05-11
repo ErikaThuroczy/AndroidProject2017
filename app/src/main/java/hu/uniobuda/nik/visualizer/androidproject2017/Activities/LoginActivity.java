@@ -56,7 +56,6 @@ public class LoginActivity extends Activity {
         //////////////////////////////////////////////////////////////
 
         //Check for already registered user
-        Log.d(TAG, "Users Response: fromDB");
         Cursor c = dbHandler.loadUsers();
         String email = "";
         String hashdpswd = "";
@@ -65,6 +64,7 @@ public class LoginActivity extends Activity {
             hashdpswd = c.getString(c.getColumnIndex("Password"));
         }
         c.close();
+        Log.d(TAG, "Users Response: fromDB: " + email + " - " + hashdpswd);
         if (!email.isEmpty() && !hashdpswd.isEmpty()) {
             //try logging in
             Log.d(TAG, "Users Response: fromDB: " + email + " - " + hashdpswd);
@@ -187,7 +187,7 @@ public class LoginActivity extends Activity {
                 params.put("email", email);
                 params.put("password", password);
                 params.put("token", AppConfig.TOKEN);
-                Log.e("SHA1:: ", password);
+                Log.e("SHA2:: ",email+" - "+ password);
                 return params;
             }
 

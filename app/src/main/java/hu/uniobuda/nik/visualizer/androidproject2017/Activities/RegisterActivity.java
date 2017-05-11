@@ -189,8 +189,8 @@ public class RegisterActivity extends Activity {
                 params.put("token", AppConfig.TOKEN);
                 params.put("name", username);
                 params.put("email", email);
-                params.put("password", makeSHA1hash(password));
-                Log.e("SHA1:: ", makeSHA1hash(password));
+                params.put("password", password);
+                Log.e("SHA1:: ", password);
                 return params;
             }
 

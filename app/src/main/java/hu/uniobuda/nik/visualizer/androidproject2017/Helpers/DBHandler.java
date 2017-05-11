@@ -88,7 +88,7 @@ public class DBHandler {
 
         Log.e(
                 "InsertRowUsers",
-                "Insert successful:: Name:" + name + "| Email: " + email + "| Created: " + created
+                "Insert successful:: Name:" + name + "| Email: " + email + "| Pass: " + password+ "| Created: " + created
         );
     }
 

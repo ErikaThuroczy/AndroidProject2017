@@ -101,7 +101,7 @@ public class RepoAdderActivity extends AppCompatActivity {
                             if (!error) {
                                 // Now store the new item in SQLite
                                 String repo_id_name = jObj.getString("repo_id_name");
-                                String repo_name = jObj.getString("repo_url");
+                                String repo_name = jObj.getString("repo_name");
 
                                 //launch selecter activity
                                 Intent intent = new Intent(RepoAdderActivity.this, RepoSelecterActivity.class);
@@ -134,9 +134,8 @@ public class RepoAdderActivity extends AppCompatActivity {
                 params.put("token", AppConfig.TOKEN);
                 params.put("uid", getIntent().getStringExtra("uid"));
                 params.put("repo_id_name ", idname);
-                params.put("repo_url", repoName);
+                params.put("repo_name", repoName);
                 params.put("repo_user", username);
-                params.put("repo_password", "fake");
                 Log.e(TAG, "ADD: " + params);
                 return params;
             }

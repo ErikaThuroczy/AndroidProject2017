@@ -36,21 +36,22 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
-            android:drawableLeft="@android:drawable/ic_dialog_dialer"
-            android:drawableStart="@android:drawable/ic_dialog_dialer"
+            android:drawableLeft="@drawable/ic_sort_white"
+            android:drawableStart="@drawable/ic_sort_white"
             android:paddingLeft="5dp"
             android:paddingStart="5dp" />
 
         <ListView
             android:id="@+id/main_list"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/main_repo"
             android:layout_marginEnd="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="20dp"
+            android:minHeight="300dp"
             android:paddingLeft="10dp"
             android:paddingStart="10dp" />
 
@@ -63,8 +64,8 @@
             android:layout_below="@id/main_more"
             android:layout_marginTop="25dp"
             android:background="@android:color/transparent"
-            android:drawableLeft="@android:drawable/ic_menu_add"
-            android:drawableStart="@android:drawable/ic_menu_add"
+            android:drawableLeft="@drawable/ic_add_white"
+            android:drawableStart="@drawable/ic_add_white"
             android:paddingLeft="5dp"
             android:paddingStart="5dp" />
 

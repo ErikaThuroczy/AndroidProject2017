@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="5dp"
-            android:drawableLeft="@android:drawable/sym_action_email"
-            android:drawableStart="@android:drawable/sym_action_email"
+            android:drawableLeft="@drawable/ic_mail_white"
+            android:drawableStart="@drawable/ic_mail_white"
             android:lines="1"
             android:textColor="@color/colorWhite" />
         <!--android:inputType="textEmailAddress"-->
@@ -51,8 +51,8 @@
             android:id="@+id/log_pswd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:drawableLeft="@drawable/ic_pswd_white"
+            android:drawableStart="@drawable/ic_pswd_white"
             android:inputType="textPassword"
             android:lines="1"
             android:textColor="@color/colorWhite" />
