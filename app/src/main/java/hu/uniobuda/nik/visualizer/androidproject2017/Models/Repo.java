@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class Repo implements Parcelable {
     private String repo_id_name;
-    private String other;
+    private Commit[] commit;
 
     public String getRepoIdName() {
         return repo_id_name;
@@ -13,7 +13,7 @@ public class Repo implements Parcelable {
 
     public Repo(Parcel parcel) {
         repo_id_name = parcel.readString();
-        other = parcel.readString();
+        commit = (Commit[]) parcel.readParcelableArray(getClass().getClassLoader());
     }
 
     public static final Creator<Repo> CREATOR = new Creator<Repo>() {
@@ -36,6 +36,6 @@ public class Repo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(repo_id_name);
-        dest.writeString(other);
+        dest.writeParcelableArray(commit, flags);
     }
 }

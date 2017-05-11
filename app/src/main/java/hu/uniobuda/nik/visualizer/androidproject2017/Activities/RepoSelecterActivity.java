@@ -33,7 +33,7 @@ import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.DBHandler;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Repo;
-import hu.uniobuda.nik.visualizer.androidproject2017.Models.RepoAdaper;
+import hu.uniobuda.nik.visualizer.androidproject2017.Models.StatisticsAdapter;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Statistics;
 import hu.uniobuda.nik.visualizer.androidproject2017.R;
 
@@ -66,6 +66,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("test", "clicked on list!");
                 /*
+                getVisualizer(mainStatList.getSelectedItem().toString());
                 GitData data = //get gitData;
 
                 Intent intent = new Intent(RepoSelecterActivity.this, VisualizerActivity.class);
@@ -167,7 +168,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
                                     db.InsertIntoREPOLIST(repos.getJSONObject(i).getString("repo_id_name"), Calendar.getInstance().getTime().toString());
                                     arrayList.add(repos.getJSONObject(i).getString("repo_id_name"));
                                 }
-                                RepoAdaper adapter = new RepoAdaper(arrayList);
+                                StatisticsAdapter adapter = new StatisticsAdapter(arrayList);
                                 mainStatList.setAdapter(adapter);
                             } else {
                                 //error in login - error message
