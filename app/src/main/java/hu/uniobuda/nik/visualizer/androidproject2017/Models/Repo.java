@@ -10,6 +10,9 @@ public class Repo implements Parcelable {
     public String getRepoIdName() {
         return repo_id_name;
     }
+    public Commit[] getCommits() {
+        return commit;
+    }
 
     public Repo(Parcel parcel) {
         repo_id_name = parcel.readString();

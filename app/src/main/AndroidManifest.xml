@@ -7,9 +7,9 @@
     <application
         android:name=".Helpers.AppController"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_team"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_team"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
