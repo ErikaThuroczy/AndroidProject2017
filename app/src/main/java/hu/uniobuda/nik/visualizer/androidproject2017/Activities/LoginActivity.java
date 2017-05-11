@@ -23,14 +23,12 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.DBHandler;
-import hu.uniobuda.nik.visualizer.androidproject2017.Models.Statistics;
 import hu.uniobuda.nik.visualizer.androidproject2017.R;
 
 import static android.content.ContentValues.TAG;
@@ -60,8 +58,8 @@ public class LoginActivity extends Activity {
         //Check for already registered user
         Log.d(TAG, "Users Response: fromDB");
         Cursor c = dbHandler.loadUsers();
-        String email="";
-        String hashdpswd="";
+        String email = "";
+        String hashdpswd = "";
         while (c.moveToNext()) {
             email = c.getString(c.getColumnIndex("Email"));
             hashdpswd = c.getString(c.getColumnIndex("Password"));
@@ -69,8 +67,8 @@ public class LoginActivity extends Activity {
         c.close();
         if (!email.isEmpty() && !hashdpswd.isEmpty()) {
             //try logging in
-            Log.d(TAG, "Users Response: fromDB: "+email+" - "+hashdpswd);
-            checkLogin(email,hashdpswd);
+            Log.d(TAG, "Users Response: fromDB: " + email + " - " + hashdpswd);
+            checkLogin(email, hashdpswd);
         }
 
 
@@ -134,7 +132,7 @@ public class LoginActivity extends Activity {
 
     private void checkLogin(final String email, final String password) {
         //tag used to cancel the request
-        String tag_string_req = "log_login";
+        String tag_string_login = "log_login";
 
         pDialog.setMessage("Logging in ...");
         showHideDialog();
@@ -145,7 +143,7 @@ public class LoginActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG, "Login Response: " + response.toString());
+                        Log.d(TAG, "Login Response: " + response);
                         showHideDialog();
 
                         try {
@@ -195,6 +193,6 @@ public class LoginActivity extends Activity {
 
         };
         //adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_login);
     }
 }

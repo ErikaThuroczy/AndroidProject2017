@@ -25,12 +25,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.DBHandler;
+import hu.uniobuda.nik.visualizer.androidproject2017.Models.Repo;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.RepoAdaper;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Statistics;
 import hu.uniobuda.nik.visualizer.androidproject2017.R;
@@ -117,6 +119,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //open repo adder
                 Intent myIntent = new Intent(getApplicationContext(), RepoAdderActivity.class);
+                myIntent.putExtra("uid", getIntent().getStringExtra("uid"));
                 startActivity(myIntent);
             }
         });
@@ -143,7 +146,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG, "RepoList Response: " + response.toString());
+                        Log.d(TAG, "RepoList Response: " + response);
                         showHideDialog();
 
                         try {
@@ -159,8 +162,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
                                 int count = jObj.getInt("count");
 
                                 ArrayList<String> arrayList = new ArrayList<>();
-                                for (int i = 0; i < count; i++)
-                                {
+                                for (int i = 0; i < count; i++) {
                                     Log.d("repo", repos.getJSONObject(i).getString("repo_id_name"));
                                     db.InsertIntoREPOLIST(repos.getJSONObject(i).getString("repo_id_name"), Calendar.getInstance().getTime().toString());
                                     arrayList.add(repos.getJSONObject(i).getString("repo_id_name"));
@@ -200,7 +202,6 @@ public class RepoSelecterActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-
     private void checkStatistics(final String selected) {
         //tag used to cancel the request
         String tag_string_req = "main_statistics";
@@ -214,7 +215,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG, "Statistics Response: " + response.toString());
+                        Log.d(TAG, "Statistics Response: " + response);
                         showHideDialog();
 
                         try {
@@ -272,5 +273,94 @@ public class RepoSelecterActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    private void getVisualizer(final String selected) {
+        //tag used to cancel the request
+        String tag_string_visualizer = "main_visualizer";
+
+        pDialog.setMessage("Getting visualization data ...");
+        showHideDialog();
+
+        StringRequest strReq = new StringRequest(
+                Request.Method.POST,
+                AppConfig.URL_REPO_COMMITS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, "Visualizer Response: " + response);
+                        showHideDialog();
+
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            boolean error = jObj.getBoolean("error");
+
+                            //check for error node in json
+                            if (!error) {
+                                // user successfully got statisitcs
+                                // Now store the stat in SQLite
+                                int count = jObj.getInt("count");
+                                /** > Success
+                                {
+                                    "tag":"repo_commits",
+                                    "error":false,
+                                    "repo_id_name":<repo_id_name>,
+                                    "from":"2017-01-01 00:00:00",
+                                    "to":"2017-01-01 01:00:00",
+                                    "count":7,
+                                    "commits":
+                                        [
+                                            {<commit data...>},
+                                            {<commit data...>},
+                                        ]
+                                }**/
+
+
+                                Gson gson = new GsonBuilder().create();
+                                Repo visualizer = gson.fromJson(String.valueOf(jObj.getJSONObject("commits")), Repo.class);
+                                //db.InsertIntoVISUALIZER(visualizer, selected, Calendar.getInstance().getTime().toString());
+
+                                //launch stat activity
+                                Intent intent = new Intent(RepoSelecterActivity.this, VisualizerActivity.class);
+                                intent.putExtra("visualizer", visualizer);
+                                Log.d(TAG, "Visualizer : " + visualizer.getRepoIdName());
+
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                //error in login - error message
+                                String errorMsg = jObj.getString("error_msg");
+                                Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "Visualizer Error: " + error.getMessage());
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        showHideDialog();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(new Date(0L)); // mindate
+                //posting parameters to url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AppConfig.TOKEN);
+                params.put("uid", getIntent().getStringExtra("uid"));
+                params.put("repo_id_name", selected);
+                params.put("from", cal.getTime().toString());
+                params.put("to", Calendar.getInstance().getTime().toString());
+
+                return params;
+            }
+        };
+        //adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_visualizer);
+    }
 
 }

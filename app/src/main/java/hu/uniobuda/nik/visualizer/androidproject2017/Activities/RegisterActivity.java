@@ -79,7 +79,7 @@ public class RegisterActivity extends Activity {
 
                 //check for empty data in the form
                 if (!uname.isEmpty() && !mail.isEmpty() && !pswd.isEmpty()) {
-                    checkRegister(uname, mail, pswd);
+                    checkRegister(uname, mail, makeSHA1hash(pswd));
                 } else {
                     //prompt user to enter credentials
                     Toast.makeText(getApplicationContext(), "Please enter the credentials!", Toast.LENGTH_LONG).show();
@@ -152,7 +152,7 @@ public class RegisterActivity extends Activity {
                                 dbHandler.InsertIntoUSERS(
                                         user.getString("name"),
                                         user.getString("email"),
-                                        makeSHA1hash(password),
+                                        password,
                                         Calendar.getInstance().getTime().toString()
                                 );
 

@@ -79,9 +79,9 @@ public class RepoAdderActivity extends AppCompatActivity {
 
     private void checkGitLogin(final String idname, final String username, final String repoName) {
         //tag used to cancel the request
-        String tag_string_req = "log_git_add";
+        String tag_string_git_add = "log_git_add";
 
-        pDialog.setMessage("Logging in ...");
+        pDialog.setMessage("Adding ...");
         showHideDialog();
 
         StringRequest strReq = new StringRequest(
@@ -90,7 +90,7 @@ public class RepoAdderActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG, "Login Response: " + response.toString());
+                        Log.d(TAG, "Add Response: " + response);
                         showHideDialog();
 
                         try {
@@ -101,14 +101,11 @@ public class RepoAdderActivity extends AppCompatActivity {
                             if (!error) {
                                 // Now store the new item in SQLite
                                 String repo_id_name = jObj.getString("repo_id_name");
-                                String repo_name = jObj.getString("repo_name");
-
-                                // Inserting row in repo table
-                                //db.addRepo(repo);
+                                String repo_name = jObj.getString("repo_url");
 
                                 //launch selecter activity
                                 Intent intent = new Intent(RepoAdderActivity.this, RepoSelecterActivity.class);
-                                //putextra uid ?
+                                intent.putExtra("uid", getIntent().getStringExtra("uid"));
                                 startActivity(intent);
                                 finish();
                             } else {
@@ -125,7 +122,7 @@ public class RepoAdderActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, "Login Error: " + error.getMessage());
+                        Log.e(TAG, "Add Error: " + error.getMessage());
                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                         showHideDialog();
                     }
@@ -137,15 +134,15 @@ public class RepoAdderActivity extends AppCompatActivity {
                 params.put("token", AppConfig.TOKEN);
                 params.put("uid", getIntent().getStringExtra("uid"));
                 params.put("repo_id_name ", idname);
-                params.put("repo_name", repoName);
+                params.put("repo_url", repoName);
                 params.put("repo_user", username);
-                params.put("repo_password", "");
-
+                params.put("repo_password", "fake");
+                Log.e(TAG, "ADD: " + params);
                 return params;
             }
         };
         //adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_git_add);
     }
 
 }
