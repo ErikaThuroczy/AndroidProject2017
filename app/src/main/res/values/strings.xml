@@ -24,4 +24,6 @@
     <string name="greatest_number_of_commits_by_count">Greatest number of commits by count</string>
     <string name="busiest_period">Busiest period</string>
     <string name="others">Others</string>
+    <string name="running_visualization">Running visualization...</string>
+    <string name="open_statistics">Open Statistics</string>
 </resources>

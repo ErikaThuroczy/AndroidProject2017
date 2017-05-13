@@ -133,7 +133,7 @@ public class RegisterActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG, "Register Response: " + response.toString());
+                        Log.d(TAG, "Register Response: " + response);
                         showHideDialog();
 
                         try {
@@ -190,7 +190,7 @@ public class RegisterActivity extends Activity {
                 params.put("name", username);
                 params.put("email", email);
                 params.put("password", password);
-                Log.e("SHA1:: ", password);
+                Log.e(TAG, "REG: " + params);
                 return params;
             }
 

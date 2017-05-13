@@ -2,12 +2,41 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@color/colorPrimaryDark">
-    <ImageView
-        android:id="@+id/visualizer_image"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@android:color/background_light"
-        android:minHeight="400dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="@string/running_visualization"
+            android:textColor="@color/colorWhite" />
+
+        <hu.uniobuda.nik.visualizer.androidproject2017.Models.LineChartView
+            android:id="@+id/visualizer_chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:background="#444"
+            android:padding="16dp" />
+
+        <Button
+            android:id="@+id/visualizer_stat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:paddingTop="5dp"
+            android:text="@string/open_statistics"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
 </ScrollView>

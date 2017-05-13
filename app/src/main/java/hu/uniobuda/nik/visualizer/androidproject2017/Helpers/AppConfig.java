@@ -20,4 +20,7 @@ public class AppConfig {
     //Commits of repo URL: <host>/api/repos/commits
     public static String URL_REPO_COMMITS = "http://repoanalytics.azurewebsites.net/api/git/repocommits";
 
+    //Test commits of repo URL: <host>/api/repos/testcommits
+    public static String URL_TEST_REPO_COMMITS = "http://repoanalytics.azurewebsites.net/api/git/testrepocommits";
+
 }

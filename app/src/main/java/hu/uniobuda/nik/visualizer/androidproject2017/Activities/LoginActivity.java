@@ -62,9 +62,9 @@ public class LoginActivity extends Activity {
         while (c.moveToNext()) {
             email = c.getString(c.getColumnIndex("Email"));
             hashdpswd = c.getString(c.getColumnIndex("Password"));
+            Log.d(TAG, "Users Response: fromDB: " + email + " - " + hashdpswd);
         }
         c.close();
-        Log.d(TAG, "Users Response: fromDB: " + email + " - " + hashdpswd);
         if (!email.isEmpty() && !hashdpswd.isEmpty()) {
             //try logging in
             Log.d(TAG, "Users Response: fromDB: " + email + " - " + hashdpswd);
@@ -187,7 +187,7 @@ public class LoginActivity extends Activity {
                 params.put("email", email);
                 params.put("password", password);
                 params.put("token", AppConfig.TOKEN);
-                Log.e("SHA2:: ",email+" - "+ password);
+                Log.e(TAG, "LOG: " + params);
                 return params;
             }
 
