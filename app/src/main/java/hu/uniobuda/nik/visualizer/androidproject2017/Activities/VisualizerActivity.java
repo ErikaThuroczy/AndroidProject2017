@@ -90,45 +90,33 @@ public class VisualizerActivity extends AppCompatActivity {
         mainStatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selectedListItem = "androidos";//getIntent().getStringExtra("selected");
+                String selectedListItem = getIntent().getStringExtra("selected");
+                Log.d(TAG, "Statistics Response: fromDB");
+                Statistics stat = new Statistics("", "0", "", "", "", "", "");
+                Cursor c = db.getStatByIdName(selectedListItem);
+                while (c.moveToNext()) {
+                    String author = c.getString(c.getColumnIndex("Author"));
+                    String totalCommit = c.getString(c.getColumnIndex("TotalCommit"));
+                    String elapsedTime = c.getString(c.getColumnIndex("ElapsedTime"));
+                    String mostCommitCount = c.getString(c.getColumnIndex("MostCommitCount"));
+                    String mostCommitSize = c.getString(c.getColumnIndex("MostCommitSize"));
+                    String busiestPeriod = c.getString(c.getColumnIndex("BusiestPeriod"));
+                    String other = c.getString(c.getColumnIndex("Other"));
+                    stat = new Statistics(author, totalCommit, elapsedTime, mostCommitCount, mostCommitSize, busiestPeriod, other);
+                }
+                c.close();
+                if (!stat.getAuthor().isEmpty()) {
+                    //launch stat activity
+                    Intent intent = new Intent(VisualizerActivity.this, StatisticsActivity.class);
+                    intent.putExtra("repo_stat", stat);
 
-                //checkStatistics("teszt");
-                //check for empty data
-                if (true) {//!selectedListItem.isEmpty()) {
-                    //db has stat info
-                    Log.d(TAG, "Statistics Response: fromDB");
-                    Statistics stat = new Statistics("", "0", "", "", "", "", "");
-                    Cursor c = db.getStatByIdName(selectedListItem);
-                    while (c.moveToNext()) {
-                        String author = c.getString(c.getColumnIndex("Author"));
-                        String totalCommit = c.getString(c.getColumnIndex("TotalCommit"));
-                        String elapsedTime = c.getString(c.getColumnIndex("ElapsedTime"));
-                        String mostCommitCount = c.getString(c.getColumnIndex("MostCommitCount"));
-                        String mostCommitSize = c.getString(c.getColumnIndex("MostCommitSize"));
-                        String busiestPeriod = c.getString(c.getColumnIndex("BusiestPeriod"));
-                        String other = c.getString(c.getColumnIndex("Other"));
-                        stat = new Statistics(author, totalCommit, elapsedTime, mostCommitCount, mostCommitSize, busiestPeriod, other);
-                    }
-                    c.close();
-                    if (!stat.getAuthor().isEmpty()) {
-                        //launch stat activity
-                        Intent intent = new Intent(VisualizerActivity.this, StatisticsActivity.class);
-                        intent.putExtra("repo_stat", stat);
-                        Log.d(TAG, "Statistics fromDBauth: " + stat.getAuthor());
-
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        checkStatistics(selectedListItem);
-                    }
+                    startActivity(intent);
+                    finish();
                 } else {
-                    //prompt user to select a list item
-                    Toast.makeText(getApplicationContext(), "Please select a repo!", Toast.LENGTH_LONG).show();
+                    checkStatistics(selectedListItem);
                 }
             }
         });
-
-
     }
 
     private float[] getDataFromInterval(int start, int end) {
@@ -137,14 +125,17 @@ public class VisualizerActivity extends AppCompatActivity {
         int times10 = 0;
         float[] ret = new float[count];
 
+        ((TextView) findViewById(R.id.visualizer_from)).setText(data.getCommits()[start].getCommitTime());
+        ((TextView) findViewById(R.id.visualizer_to)).setText(data.getCommits()[end].getCommitTime());
+
         for (int i = 0; i < count; i++) {
-            ret[i] = (total > i) ? Float.parseFloat(data.getCommits()[start + i].getPercentOfchanges()) : 0;
+            ret[i] = total > i ? Float.parseFloat(data.getCommits()[start + i].getPercentOfchanges()) : 0;
         }
         for (float f : ret) {
             checkSum += f;
         }
         while (checkSum.toString().startsWith("0")) {
-            checkSum *=10;
+            checkSum *= 10;
             times10 += 1;
         }
         for (int j = 0; j < count; j++) {

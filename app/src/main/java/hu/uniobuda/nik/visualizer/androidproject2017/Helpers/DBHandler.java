@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Statistics;
 
@@ -88,7 +89,7 @@ public class DBHandler {
 
         Log.e(
                 "InsertRowUsers",
-                "Insert successful:: Name:" + name + "| Email: " + email + "| Pass: " + password+ "| Created: " + created
+                "Insert successful:: Name:" + name + "| Email: " + email + "| Pass: " + password + "| Created: " + created
         );
     }
 
@@ -144,17 +145,13 @@ public class DBHandler {
         b.close();
         return null;
     }*/
-    /*
-    public long insertUser(String name, String uid) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("uid", uid);
-        values.put("uname", name);
-        // többi mező értéke ...
-        long id = db.insert(TABLE_USERS, null, values);
+    public Cursor loadLastRecordFromTable(String table_name) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor result = db.query(table_name, null, null, null, null, null, null);
+        result.moveToLast();
         db.close();
-        return id;
-    }*/
+        return result;
+    }
 
     public Cursor loadUsers() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -163,6 +160,7 @@ public class DBHandler {
         db.close();
         return result;
     }
+
     public Cursor loadStat() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor result = db.query(TABLE_STAT, null, null, null, null, null, null);
@@ -191,6 +189,15 @@ public class DBHandler {
         }
         res.close();
         return array_list;
+    }
+
+    public void onUpdate() {
+        dbHelper.getWritableDatabase().execSQL("DROP TABLE IF EXISTS " + TABLE_REPOLIST);
+        dbHelper.getWritableDatabase().execSQL(CREATE_TABLE_REPOLIST);
+
+        dbHelper.getWritableDatabase().execSQL("DROP TABLE IF EXISTS " + TABLE_STAT);
+        dbHelper.getWritableDatabase().execSQL(CREATE_TABLE_STAT);
+
     }
 
     private class DBHelper extends SQLiteOpenHelper {

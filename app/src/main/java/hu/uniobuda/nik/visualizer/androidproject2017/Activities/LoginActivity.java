@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,21 +57,23 @@ public class LoginActivity extends Activity {
         //////////////////////////////////////////////////////////////
 
         //Check for already registered user
-        Cursor c = dbHandler.loadUsers();
-        String email = "";
-        String hashdpswd = "";
-        while (c.moveToNext()) {
-            email = c.getString(c.getColumnIndex("Email"));
-            hashdpswd = c.getString(c.getColumnIndex("Password"));
-            Log.d(TAG, "Users Response: fromDB: " + email + " - " + hashdpswd);
-        }
-        c.close();
-        if (!email.isEmpty() && !hashdpswd.isEmpty()) {
-            //try logging in
-            Log.d(TAG, "Users Response: fromDB: " + email + " - " + hashdpswd);
-            checkLogin(email, hashdpswd);
-        }
+        Cursor c = dbHandler.loadLastRecordFromTable("Users");
+        if (c.getCount() >= 1) {
+            String email = c.getString(c.getColumnIndex("Email"));
+            String hashdpswd = c.getString(c.getColumnIndex("Password"));
 
+            c.close();
+            if (!email.isEmpty() && !hashdpswd.isEmpty()) {
+                //try logging in
+                Log.d(TAG, "Users Response: fromDB: " + email + " - " + hashdpswd);
+                checkLogin(email, hashdpswd);
+            }
+        }
+        //register a new user
+        else {
+            Intent myIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(myIntent);
+        }
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,10 +157,20 @@ public class LoginActivity extends Activity {
                             if (!error) {
                                 // user successfully logged in
                                 String uid = jObj.getString("uid");
-
                                 //launch selecter activity
                                 Intent intent = new Intent(LoginActivity.this, RepoSelecterActivity.class);
                                 intent.putExtra("uid", uid);
+
+                                //check for users in SQLite
+                                Cursor c = dbHandler.loadLastRecordFromTable("Users");
+                                if (c.getCount() < 1) {
+                                    dbHandler.InsertIntoUSERS(
+                                            jObj.getJSONObject("user").getString("name"),
+                                            email,
+                                            password,
+                                            Calendar.getInstance().getTime().toString()
+                                    );
+                                }
 
                                 startActivity(intent);
                                 finish();
@@ -195,4 +208,5 @@ public class LoginActivity extends Activity {
         //adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_login);
     }
+
 }

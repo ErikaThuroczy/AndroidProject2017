@@ -21,6 +21,35 @@
             android:text="@string/running_visualization"
             android:textColor="@color/colorWhite" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp">
+
+            <TextView
+                android:id="@+id/visualizer_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorWhite"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/visualizer_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorWhite"
+                android:textStyle="italic" />
+        </LinearLayout>
+
         <hu.uniobuda.nik.visualizer.androidproject2017.Models.LineChartView
             android:id="@+id/visualizer_chart"
             android:layout_width="match_parent"

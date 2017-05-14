@@ -43,8 +43,8 @@ public class Commit implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(committer_name);
         dest.writeString(commit_time);
+        dest.writeString(committer_name);
         dest.writeString(percent_of_changes);
     }
 }

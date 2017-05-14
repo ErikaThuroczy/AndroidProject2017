@@ -2,9 +2,10 @@ package hu.uniobuda.nik.visualizer.androidproject2017.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,16 +24,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.DBHandler;
-import hu.uniobuda.nik.visualizer.androidproject2017.Models.Commit;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Repo;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.StatisticsAdapter;
 import hu.uniobuda.nik.visualizer.androidproject2017.R;
@@ -56,8 +59,12 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
         mainAddBtn = (Button) findViewById(R.id.main_add);
 
+        //if (checkUpdate(getIntent().getStringExtra("uid"))) {
+            //empty Db
+            // query to obtain the names of all tables in your database
+            //db.onUpdate();
+        //}
         getRepoList();
-
 
         mainStatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,10 +73,8 @@ public class RepoSelecterActivity extends AppCompatActivity {
                 if (!selected.isEmpty()) {
                     getVisualizer(selected);
                 }
-                Log.d("test", "clicked on list!");
             }
         });
-
 
         mainAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +97,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
     private void getRepoList() {
         //tag used to cancel the request
-        String tag_string_req = "main_repo_list";
+        String tag_string_list = "main_repo_list";
 
         pDialog.setMessage("Loading repository list ...");
         showHideDialog();
@@ -114,7 +119,6 @@ public class RepoSelecterActivity extends AppCompatActivity {
                             if (!error) {
                                 // user successfully got repolist
                                 // Now store the repolist in SQLite
-
                                 JSONArray repos = jObj.getJSONArray("repos");
                                 int count = jObj.getInt("count");
 
@@ -156,7 +160,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
             }
         };
         //adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_list);
     }
 
     private void getVisualizer(final String selected) {
@@ -168,7 +172,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
         StringRequest strReq = new StringRequest(
                 Request.Method.POST,
-                AppConfig.URL_TEST_REPO_COMMITS,
+                AppConfig.URL_REPO_COMMITS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -218,15 +222,26 @@ public class RepoSelecterActivity extends AppCompatActivity {
                 }) {
             @Override
             protected Map<String, String> getParams() {
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(new Date(0L)); // mindate
                 //posting parameters to url
+                String format = "yyyy-MM-dd HH:mm:ss";
+                SimpleDateFormat simpleDateFormat;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    simpleDateFormat = new SimpleDateFormat(format, getResources().getConfiguration().getLocales().get(0));
+                } else {
+                    simpleDateFormat = new SimpleDateFormat(format, getResources().getConfiguration().locale);
+                }
+
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("token", AppConfig.TOKEN);
                 params.put("uid", getIntent().getStringExtra("uid"));
                 params.put("repo_id_name", selected);
-                params.put("from", cal.getTime().toString());
-                params.put("to", Calendar.getInstance().getTime().toString());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    params.put("from", simpleDateFormat.format(new Date(0L)));
+                    params.put("to", simpleDateFormat.format(new Date()));
+                } else {
+                    params.put("from", simpleDateFormat.format(new Date(0L)));
+                    params.put("to", simpleDateFormat.format(new Date()));
+                }
                 Log.e(TAG, "VIS: " + params);
                 return params;
             }
@@ -235,4 +250,47 @@ public class RepoSelecterActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_visualizer);
     }
 
+    boolean update = false;
+    private boolean checkUpdate(final String uid) {
+        //tag used to cancel the request
+        String tag_string_update = "log_update";
+
+        StringRequest strReq = new StringRequest(
+                Request.Method.POST,
+                AppConfig.URL_UPDATES,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, "Updates Response: " + response);
+
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            int count = jObj.getInt("count");
+                            update = count != 0 ? true : false;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "Updates Error: " + error.getMessage());
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                //posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", AppConfig.TOKEN);
+                params.put("uid", uid);
+                Log.e(TAG, "UPD: " + params);
+                return params;
+            }
+
+        };
+        //adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_update);
+        return update;
+    }
 }
