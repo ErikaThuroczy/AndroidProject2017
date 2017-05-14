@@ -184,8 +184,6 @@ public class RepoSelecterActivity extends AppCompatActivity {
                                 // user successfully got visualization data
                                 // Now store the stat in SQLite
                                 int count = jObj.getInt("count");
-                                Log.d(TAG, "count : " + count);
-
                                 Gson gson = new GsonBuilder().create();
                                 Repo repo = gson.fromJson(String.valueOf(jObj.getJSONObject("repo")), Repo.class);
                                 //db.InsertIntoVISUALIZER(visualizer, selected, Calendar.getInstance().getTime().toString());
@@ -196,11 +194,6 @@ public class RepoSelecterActivity extends AppCompatActivity {
                                 intent.putExtra("selected", selected);//repo_id_name
                                 intent.putExtra("count", count);
                                 intent.putExtra("repo", repo);
-                                Log.d(TAG, "Visualizer : " + repo.getRepoIdName());
-                                Commit [] c = repo.getCommits();
-
-                                Log.d(TAG, "Visualizer : " + c.length);
-                                Log.d(TAG, "Visualizer : " + repo.getCommits()[0].getPercentOfchanges());
 
                                 startActivity(intent);
                                 finish();

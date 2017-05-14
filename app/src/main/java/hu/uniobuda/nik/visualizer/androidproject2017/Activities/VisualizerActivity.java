@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -28,13 +26,11 @@ import org.json.JSONObject;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.DBHandler;
-import hu.uniobuda.nik.visualizer.androidproject2017.Models.Commit;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Repo;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Statistics;
 import hu.uniobuda.nik.visualizer.androidproject2017.R;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -49,6 +45,10 @@ public class VisualizerActivity extends AppCompatActivity {
     Button mainStatBtn;
     ProgressDialog pDialog;
     DBHandler db;
+    Repo data;
+
+    int counter = 0;
+    int total = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,22 +59,13 @@ public class VisualizerActivity extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         mainStatBtn = (Button) findViewById(R.id.visualizer_stat);
 
-        String selected = getIntent().getStringExtra("selected");
-        if (!selected.isEmpty()) {
-            ((TextView) findViewById(R.id.visualizer_text)).setText(selected);
-        }
-        Log.d("ASD", selected);
+        ((TextView) findViewById(R.id.visualizer_text)).setText(getIntent().getStringExtra("selected"));
+        total = getIntent().getIntExtra("count", 0);
+        data = getIntent().getParcelableExtra("repo");
 
-        //Repo data = (Repo)getIntent().getParcelableExtra("repo");
-        /*Log.d("ASD", data.getCommits()[0].getPercentOfchanges());
-        for (int i = 0; i < getIntent().getIntExtra("count", 0); i++) {
-            Log.d(i + " row::", data.getCommits()[i].getPercentOfchanges());
-
-
-        }*/
-
+        //getDataFromInterval >>if start = end >>restart simulation >>else sart&end+10
         final LineChartView lineChart = (LineChartView) findViewById(R.id.visualizer_chart);
-        lineChart.setChartData(getRandomData());
+        lineChart.setChartData(getDataFromInterval(0, 9));
 
         final Handler handler = new Handler();
         Timer timer = new Timer(false);
@@ -84,7 +75,12 @@ public class VisualizerActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        lineChart.setChartData(getRandomData());
+                        if (counter * 10 < total) {
+                            lineChart.setChartData(getDataFromInterval(counter * 10, (counter + 1) * 10 - 1));
+                        } else {
+                            counter = 0;
+                            lineChart.setChartData(getDataFromInterval(0, 9));
+                        }
                     }
                 });
             }
@@ -133,6 +129,29 @@ public class VisualizerActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private float[] getDataFromInterval(int start, int end) {
+        int count = 10;
+        Float checkSum = 0f;
+        int times10 = 0;
+        float[] ret = new float[count];
+
+        for (int i = 0; i < count; i++) {
+            ret[i] = (total > i) ? Float.parseFloat(data.getCommits()[start + i].getPercentOfchanges()) : 0;
+        }
+        for (float f : ret) {
+            checkSum += f;
+        }
+        while (checkSum.toString().startsWith("0")) {
+            checkSum *=10;
+            times10 += 1;
+        }
+        for (int j = 0; j < count; j++) {
+            ret[j] = (float) (ret[j] * (Math.pow(10, (times10 + 2))));
+        }
+        counter += 1;
+        return ret;
     }
 
     private float[] getRandomData() {
