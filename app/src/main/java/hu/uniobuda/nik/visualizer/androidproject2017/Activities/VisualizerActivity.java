@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,10 +28,13 @@ import org.json.JSONObject;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.DBHandler;
+import hu.uniobuda.nik.visualizer.androidproject2017.Models.Commit;
+import hu.uniobuda.nik.visualizer.androidproject2017.Models.Repo;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Statistics;
 import hu.uniobuda.nik.visualizer.androidproject2017.R;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -51,13 +57,45 @@ public class VisualizerActivity extends AppCompatActivity {
 
         db = new DBHandler(this);
         pDialog = new ProgressDialog(this);
-
-
         mainStatBtn = (Button) findViewById(R.id.visualizer_stat);
+
+        String selected = getIntent().getStringExtra("selected");
+        if (!selected.isEmpty()) {
+            ((TextView) findViewById(R.id.visualizer_text)).setText(selected);
+        }
+        Log.d("ASD", selected);
+
+        //Repo data = (Repo)getIntent().getParcelableExtra("repo");
+        /*Log.d("ASD", data.getCommits()[0].getPercentOfchanges());
+        for (int i = 0; i < getIntent().getIntExtra("count", 0); i++) {
+            Log.d(i + " row::", data.getCommits()[i].getPercentOfchanges());
+
+
+        }*/
+
+        final LineChartView lineChart = (LineChartView) findViewById(R.id.visualizer_chart);
+        lineChart.setChartData(getRandomData());
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer(false);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        lineChart.setChartData(getRandomData());
+                    }
+                });
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
+
         mainStatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selectedListItem = "androidos";//mainStatList.getSelectedItem().toString();
+                String selectedListItem = "androidos";//getIntent().getStringExtra("selected");
+
                 //checkStatistics("teszt");
                 //check for empty data
                 if (true) {//!selectedListItem.isEmpty()) {
@@ -95,23 +133,6 @@ public class VisualizerActivity extends AppCompatActivity {
         });
 
 
-        final LineChartView lineChart = (LineChartView) findViewById(R.id.visualizer_chart);
-        lineChart.setChartData(getRandomData());
-
-        final Handler handler = new Handler();
-        Timer timer = new Timer(false);
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        lineChart.setChartData(getRandomData());
-                    }
-                });
-            }
-        };
-        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
     }
 
     private float[] getRandomData() {

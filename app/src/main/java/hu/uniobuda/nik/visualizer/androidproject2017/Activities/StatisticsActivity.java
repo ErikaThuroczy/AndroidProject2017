@@ -14,13 +14,6 @@ import static android.content.ContentValues.TAG;
 
 public class StatisticsActivity extends AppCompatActivity {
     TextView statBack;
-    String auth;
-    String totalCommit;
-    String elapsedTime;
-    String commitWinnerByCount;
-    String commitWinnerBySize;
-    String busiestPeriod;
-    String other;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

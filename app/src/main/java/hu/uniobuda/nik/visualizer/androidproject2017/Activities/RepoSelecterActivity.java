@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,6 +32,7 @@ import java.util.Map;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppConfig;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.AppController;
 import hu.uniobuda.nik.visualizer.androidproject2017.Helpers.DBHandler;
+import hu.uniobuda.nik.visualizer.androidproject2017.Models.Commit;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.Repo;
 import hu.uniobuda.nik.visualizer.androidproject2017.Models.StatisticsAdapter;
 import hu.uniobuda.nik.visualizer.androidproject2017.R;
@@ -60,21 +62,11 @@ public class RepoSelecterActivity extends AppCompatActivity {
         mainStatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(RepoSelecterActivity.this, VisualizerActivity.class);
-                intent.putExtra("uid", getIntent().getStringExtra("uid"));
-                //intent.putExtra("repo_stat", stat);
+                String selected = parent.getAdapter().getItem(position).toString();
+                if (!selected.isEmpty()) {
+                    getVisualizer(selected);
+                }
                 Log.d("test", "clicked on list!");
-
-                startActivity(intent);
-                finish();
-                /*
-                getVisualizer(mainStatList.getSelectedItem().toString());
-                GitData data = //get gitData;
-
-                Intent intent = new Intent(RepoSelecterActivity.this, VisualizerActivity.class);
-                intent.putExtra("git_data", data);
-                startActivity(intent);*/
             }
         });
 
@@ -176,7 +168,7 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
         StringRequest strReq = new StringRequest(
                 Request.Method.POST,
-                AppConfig.URL_REPO_COMMITS,
+                AppConfig.URL_TEST_REPO_COMMITS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -189,33 +181,26 @@ public class RepoSelecterActivity extends AppCompatActivity {
 
                             //check for error node in json
                             if (!error) {
-                                // user successfully got statisitcs
+                                // user successfully got visualization data
                                 // Now store the stat in SQLite
                                 int count = jObj.getInt("count");
-                                /** > Success
-                                 {
-                                 "tag":"repo_commits",
-                                 "error":false,
-                                 "repo_id_name":<repo_id_name>,
-                                 "from":"2017-01-01 00:00:00",
-                                 "to":"2017-01-01 01:00:00",
-                                 "count":7,
-                                 "commits":
-                                 [
-                                 {<commit data...>},
-                                 {<commit data...>},
-                                 ]
-                                 }**/
-
+                                Log.d(TAG, "count : " + count);
 
                                 Gson gson = new GsonBuilder().create();
-                                Repo visualizer = gson.fromJson(String.valueOf(jObj.getJSONObject("commits")), Repo.class);
+                                Repo repo = gson.fromJson(String.valueOf(jObj.getJSONObject("repo")), Repo.class);
                                 //db.InsertIntoVISUALIZER(visualizer, selected, Calendar.getInstance().getTime().toString());
 
                                 //launch stat activity
                                 Intent intent = new Intent(RepoSelecterActivity.this, VisualizerActivity.class);
-                                intent.putExtra("visualizer", visualizer);
-                                Log.d(TAG, "Visualizer : " + visualizer.getRepoIdName());
+                                intent.putExtra("uid", getIntent().getStringExtra("uid"));
+                                intent.putExtra("selected", selected);//repo_id_name
+                                intent.putExtra("count", count);
+                                intent.putExtra("repo", repo);
+                                Log.d(TAG, "Visualizer : " + repo.getRepoIdName());
+                                Commit [] c = repo.getCommits();
+
+                                Log.d(TAG, "Visualizer : " + c.length);
+                                Log.d(TAG, "Visualizer : " + repo.getCommits()[0].getPercentOfchanges());
 
                                 startActivity(intent);
                                 finish();

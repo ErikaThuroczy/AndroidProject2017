@@ -5,18 +5,25 @@ import android.os.Parcelable;
 
 public class Repo implements Parcelable {
     private String repo_id_name;
-    private Commit[] commit;
+    private Commit[] commits;
 
     public String getRepoIdName() {
         return repo_id_name;
     }
     public Commit[] getCommits() {
-        return commit;
+        return commits;
     }
 
     public Repo(Parcel parcel) {
         repo_id_name = parcel.readString();
-        commit = (Commit[]) parcel.readParcelableArray(getClass().getClassLoader());
+
+        //NEVER DELETE THIS COMMENT:(Commit[]) parcel.readParcelableArray(getClass().getClassLoader());>>fix:
+        Parcelable[] cp = parcel.readParcelableArray(getClass().getClassLoader());
+        commits = new Commit[cp.length];
+        for (int i = 0; i < cp.length;i++)
+        {
+            commits[i] = (Commit)cp[i];
+        }
     }
 
     public static final Creator<Repo> CREATOR = new Creator<Repo>() {
@@ -39,6 +46,6 @@ public class Repo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(repo_id_name);
-        dest.writeParcelableArray(commit, flags);
+        dest.writeParcelableArray(commits, flags);
     }
 }
