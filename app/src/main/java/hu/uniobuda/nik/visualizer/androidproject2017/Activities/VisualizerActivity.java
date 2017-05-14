@@ -85,7 +85,7 @@ public class VisualizerActivity extends AppCompatActivity {
                 });
             }
         };
-        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
+        timer.scheduleAtFixedRate(timerTask, 1000, 3000);
 
         mainStatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +111,6 @@ public class VisualizerActivity extends AppCompatActivity {
                     intent.putExtra("repo_stat", stat);
 
                     startActivity(intent);
-                    finish();
                 } else {
                     checkStatistics(selectedListItem);
                 }
@@ -125,18 +124,22 @@ public class VisualizerActivity extends AppCompatActivity {
         int times10 = 0;
         float[] ret = new float[count];
 
-        ((TextView) findViewById(R.id.visualizer_from)).setText(data.getCommits()[start].getCommitTime());
-        ((TextView) findViewById(R.id.visualizer_to)).setText(data.getCommits()[end].getCommitTime());
+        String from = data.getCommits()[start].getCommitTime();
+        String to = data.getCommits()[total <= end ? data.getCommits().length - 1 : end].getCommitTime();
+        ((TextView) findViewById(R.id.visualizer_from)).setText(from);
+        ((TextView) findViewById(R.id.visualizer_to)).setText(to);
 
         for (int i = 0; i < count; i++) {
-            ret[i] = total > i ? Float.parseFloat(data.getCommits()[start + i].getPercentOfchanges()) : 0;
+            ret[i] = total > start + i ? Float.parseFloat(data.getCommits()[start + i].getPercentOfchanges()) : 0;
+            Log.d("val:", start + i + ".:: " + ret[i]);
         }
         for (float f : ret) {
             checkSum += f;
         }
         while (checkSum.toString().startsWith("0")) {
+            Log.d("checksum", String.valueOf(times10));
             checkSum *= 10;
-            times10 += 1;
+            times10 += 1;//times10 >= 0 ? 0 : 1;
         }
         for (int j = 0; j < count; j++) {
             ret[j] = (float) (ret[j] * (Math.pow(10, (times10 + 2))));
@@ -209,7 +212,6 @@ public class VisualizerActivity extends AppCompatActivity {
                                 Log.d(TAG, "Statistics : " + stat.getAuthor());
 
                                 startActivity(intent);
-                                finish();
                             } else {
                                 //error in login - error message
                                 String errorMsg = jObj.getString("error_msg");

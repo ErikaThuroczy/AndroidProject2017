@@ -162,7 +162,6 @@ public class RegisterActivity extends Activity {
                                 intent.putExtra("uid",uid);
 
                                 startActivity(intent);
-                                finish();
                             } else {
                                 //error in register - error message
                                 String errorMsg = jObj.getString("error_msg");

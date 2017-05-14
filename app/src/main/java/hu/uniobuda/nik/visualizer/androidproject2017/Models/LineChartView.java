@@ -71,9 +71,9 @@ public class LineChartView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //float maxValue = getMax(datapoints);
-        drawBackground(canvas, 100);
-        drawLineChart(canvas, 100);
+        float maxValue = getMax(datapoints);
+        drawBackground(canvas, maxValue);
+        drawLineChart(canvas, maxValue);
     }
 
     private void drawBackground(Canvas canvas, float maxValue) {

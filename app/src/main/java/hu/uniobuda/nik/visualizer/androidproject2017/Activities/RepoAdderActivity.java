@@ -106,7 +106,6 @@ public class RepoAdderActivity extends AppCompatActivity {
                                 Intent intent = new Intent(RepoAdderActivity.this, RepoSelecterActivity.class);
                                 intent.putExtra("uid", getIntent().getStringExtra("uid"));
                                 startActivity(intent);
-                                finish();
                             } else {
                                 //error in login - error message
                                 String errorMsg = jObj.getString("error_msg");

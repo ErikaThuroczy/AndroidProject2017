@@ -173,7 +173,6 @@ public class LoginActivity extends Activity {
                                 }
 
                                 startActivity(intent);
-                                finish();
                             } else {
                                 //error in login - error message
                                 String errorMsg = jObj.getString("error_msg");

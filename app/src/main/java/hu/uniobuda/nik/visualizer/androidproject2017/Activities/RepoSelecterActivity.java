@@ -200,7 +200,6 @@ public class RepoSelecterActivity extends AppCompatActivity {
                                 intent.putExtra("repo", repo);
 
                                 startActivity(intent);
-                                finish();
                             } else {
                                 //error in login - error message
                                 String errorMsg = jObj.getString("error_msg");

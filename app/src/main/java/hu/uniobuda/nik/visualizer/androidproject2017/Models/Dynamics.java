@@ -2,40 +2,26 @@ package hu.uniobuda.nik.visualizer.androidproject2017.Models;
 
 public class Dynamics {
 
-    /**
-     * Used to compare floats, if the difference is smaller than this, they are
-     * considered equal
-     */
+
+    //Used to compare floats, if the difference is smaller than this, they are considered equal
     private static final float TOLERANCE = 0.01f;
 
-    /**
-     * The position the dynamics should to be at
-     */
+    //The position the dynamics should to be at
     private float targetPosition;
 
-    /**
-     * The current position of the dynamics
-     */
+    //The current position of the dynamics
     private float position;
 
-    /**
-     * The current velocity of the dynamics
-     */
+    //The current velocity of the dynamics
     private float velocity;
 
-    /**
-     * The time the last update happened
-     */
+    //The time the last update happened
     private long lastTime;
 
-    /**
-     * The amount of springiness that the dynamics has
-     */
+    //The amount of springiness that the dynamics has
     private float springiness;
 
-    /**
-     * The damping that the dynamics has
-     */
+    //The damping that the dynamics has
     private float damping;
 
     public Dynamics(float springiness, float dampingRatio) {
