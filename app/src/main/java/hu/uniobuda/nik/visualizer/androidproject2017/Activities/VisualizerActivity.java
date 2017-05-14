@@ -2,7 +2,9 @@ package hu.uniobuda.nik.visualizer.androidproject2017.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -43,12 +45,18 @@ import static android.content.ContentValues.TAG;
 
 public class VisualizerActivity extends AppCompatActivity {
     Button mainStatBtn;
+    Button playBtn;
+    Button pauseBtn;
     ProgressDialog pDialog;
     DBHandler db;
     Repo data;
 
     int counter = 0;
     int total = 0;
+    Handler handler;
+    Timer timer;
+    TimerTask timerTask;
+    boolean play;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +66,9 @@ public class VisualizerActivity extends AppCompatActivity {
         db = new DBHandler(this);
         pDialog = new ProgressDialog(this);
         mainStatBtn = (Button) findViewById(R.id.visualizer_stat);
+        playBtn = (Button) findViewById(R.id.visualizer_play);
+        pauseBtn = (Button) findViewById(R.id.visualizer_pause);
+        play = true;
 
         ((TextView) findViewById(R.id.visualizer_text)).setText(getIntent().getStringExtra("selected"));
         total = getIntent().getIntExtra("count", 0);
@@ -66,26 +77,40 @@ public class VisualizerActivity extends AppCompatActivity {
         //getDataFromInterval >>if start = end >>restart simulation >>else sart&end+10
         final LineChartView lineChart = (LineChartView) findViewById(R.id.visualizer_chart);
         lineChart.setChartData(getDataFromInterval(0, 9));
-
-        final Handler handler = new Handler();
-        Timer timer = new Timer(false);
-        TimerTask timerTask = new TimerTask() {
+        handler = new Handler();
+        timer = new Timer(false);
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (counter * 10 < total) {
-                            lineChart.setChartData(getDataFromInterval(counter * 10, (counter + 1) * 10 - 1));
-                        } else {
-                            counter = 0;
-                            lineChart.setChartData(getDataFromInterval(0, 9));
+                        if (play) {
+                            if (counter * 10 < total) {
+                                lineChart.setChartData(getDataFromInterval(counter * 10, (counter + 1) * 10 - 1));
+                            } else {
+                                counter = 0;
+                                lineChart.setChartData(getDataFromInterval(0, 9));
+                            }
                         }
                     }
                 });
             }
         };
-        timer.scheduleAtFixedRate(timerTask, 1000, 3000);
+        timer.schedule(timerTask, 1000, 3000);
+
+        playBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                managePlayPause();
+            }
+        });
+        pauseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                managePlayPause();
+            }
+        });
 
         mainStatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +143,12 @@ public class VisualizerActivity extends AppCompatActivity {
         });
     }
 
+    private void managePlayPause() {
+        play = !play;
+        playBtn.setEnabled(!play);
+        pauseBtn.setEnabled(play);
+    }
+
     private float[] getDataFromInterval(int start, int end) {
         int count = 10;
         Float checkSum = 0f;
@@ -146,26 +177,6 @@ public class VisualizerActivity extends AppCompatActivity {
         }
         counter += 1;
         return ret;
-    }
-
-    private float[] getRandomData() {
-        int min = 1;
-        int max = 100;
-
-        Random r = new Random();
-        int num = r.nextInt(max - min + 1) + min;
-
-        return new float[]{
-                r.nextInt(max - min + 1) + min,
-                r.nextInt(max - min + 1) + min,
-                r.nextInt(max - min + 1) + min,
-                r.nextInt(max - min + 1) + min,
-                r.nextInt(max - min + 1) + min,
-                r.nextInt(max - min + 1) + min,
-                r.nextInt(max - min + 1) + min,
-                r.nextInt(max - min + 1) + min,
-                r.nextInt(max - min + 1) + min,
-                r.nextInt(max - min + 1) + min};
     }
 
     private void showHideDialog() {
@@ -205,6 +216,10 @@ public class VisualizerActivity extends AppCompatActivity {
                                 Gson gson = new GsonBuilder().create();
                                 Statistics stat = gson.fromJson(String.valueOf(jObj.getJSONObject("repo_stat")), Statistics.class);
                                 db.InsertIntoSTAT(stat, selected, Calendar.getInstance().getTime().toString());
+
+                                play = true;
+                                playBtn.setEnabled(!play);
+                                pauseBtn.setEnabled(play);
 
                                 //launch stat activity
                                 Intent intent = new Intent(VisualizerActivity.this, StatisticsActivity.class);
